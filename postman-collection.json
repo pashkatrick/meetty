@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "4326e072-8855-4a86-ad95-85296a052cd6",
+		"name": "Randdom Coffee",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "__utils__",
+			"item": [
+				{
+					"name": "/ready",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/ready",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"ready"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bootstrap",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/bootstrap",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"bootstrap"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/user/6",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Full User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/user/6?full=true",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"6"
+							],
+							"query": [
+								{
+									"key": "full",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/users?limit=20&offset=1",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "offset",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\": {\n        \"name\": \"Omegaa-5\",\n        \"nick_name\": \"zhuban\",\n        \"avatar\": \"\",\n        \"bio\": \"Из гетто\",\n        \"lang\": \"ru\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{rc-host}}/user/add",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 11,\n    \"update\": {\n        \"name\": \"dooper-test\",\n        \"avatar\": \"<local path>\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{rc-host}}/user/update",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Meetings",
+			"item": [
+				{
+					"name": "Get Meeting",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/meeting/3",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"meeting",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Full Meeting",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/meeting/3?full=false",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"meeting",
+								"3"
+							],
+							"query": [
+								{
+									"key": "full",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Meetings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/meetings?limit=8&offset=1",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"meetings"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "8"
+								},
+								{
+									"key": "offset",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "All Interests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{rc-host}}/interests/all",
+					"host": [
+						"{{rc-host}}"
+					],
+					"path": [
+						"interests",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Sources",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{rc-host}}/sources/all",
+					"host": [
+						"{{rc-host}}"
+					],
+					"path": [
+						"sources",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "rc-host",
+			"value": "localhost:5000"
+		}
+	]
+}

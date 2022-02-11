@@ -4,8 +4,8 @@ Todo:
   ☐ get started doc for contributors @started(22-02-09 10:30)
   ✔ finish user model @done(22-02-11 18:50)
   ✔ add meeting model @done(22-02-11 18:50)
-  ☐ add mocks/bootstrap to routes for FE
-  ☐ actualize postman collection
+  ✔ add mocks/bootstrap to routes for FE @done(22-02-11 20:42)
+  ✔ actualize postman collection @done(22-02-11 20:53)
   ☐ dockerfile sharing
 
   
