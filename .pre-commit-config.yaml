@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+        entry: trailing-whitespace-fixer
+        language: python
+        types: [text]
+      - id: end-of-file-fixer
+      - id: double-quote-string-fixer
+      - id: check-merge-conflict
+      - id: check-builtin-literals
+      - id: requirements-txt-fixer
+      - id: check-ast
+      - id: check-json
+  - repo: https://gitlab.com/PyCQA/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        args:
+          [
+            "--ignore=E501,C901,E203",
+            "--max-complexity=3",
+            "--exclude==.proto,*_pb2.py,*pb2_grpc.py",
+          ]
