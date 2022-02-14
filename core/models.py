@@ -1,4 +1,4 @@
-def user(db, orm, Availability, EventType):
+def user(db, orm):
     class User(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
         name = orm.Required(str)
@@ -17,11 +17,11 @@ def user(db, orm, Availability, EventType):
         metadata = orm.Optional(str)
         hideBranding = orm.Optional(str)
         # sub models
-        availability_id = orm.Optinal(Availability)
+        # availability_id = orm.Optinal(Availability)
         # availability = orm.Set(Availability)
         schedule = orm.Optional(str)
         booking = orm.Optional(str)
-        event_types = orm.Optinal(EventType)
+        # event_types = orm.Optinal(EventType)
         credentials = orm.Optional(str)
         plan = orm.Optional(str)
     return User

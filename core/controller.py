@@ -29,9 +29,19 @@ class DBController:
     '''
 
     @db_session
-    def get_user(self, _id: int, full: bool):
+    def get_user_by_id(self, _id: int, full: bool):
         try:
             usr = self.user_model[_id]
+            response = usr.to_dict() if full else f'{usr.name}'
+            return dict(data=response)
+        except Exception as e:
+            return dict(data=f'error: {e}')
+
+    @db_session
+    def get_user_by_name(self, _username: str, full: bool):
+        try:
+            usr = self.user_model.select(
+                lambda u: _username in u.username).first()
             response = usr.to_dict() if full else f'{usr.name}'
             return dict(data=response)
         except Exception as e:

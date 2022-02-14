@@ -53,10 +53,18 @@ def get_users():
 
 
 @app.route('/user/<int:user_id>', methods=['GET'])
-def get_user(user_id, full=False):
+def get_user_by_id(user_id, full=False):
     if request.args.get('full'):
         full = True
-    return db.get_user(_id=user_id, full=full)
+    return db.get_user_by_id(_id=user_id, full=full)
+
+
+@app.route('/<username>', methods=['GET'])
+@app.route('/user/<username>', methods=['GET'])
+def get_user_by_name(username, full=False):
+    if request.args.get('full'):
+        full = True
+    return db.get_user_by_name(_username=username, full=full)
 
 
 @app.route('/meetings', methods=['GET'])

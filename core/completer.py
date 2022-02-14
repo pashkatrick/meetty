@@ -30,7 +30,7 @@ class DBCompleter:
         for _ in range(10):
             fake_data = dict(
                 name=self.fake.name(),
-                nick_name=self.fake.simple_profile()['username'],
+                username=self.fake.simple_profile()['username'],
                 avatar='file://<path>/',
                 bio=self.fake.paragraph(nb_sentences=1),
                 lang=random.choice(['ru', 'en', 'gb', 'us'])

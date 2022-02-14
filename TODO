@@ -1,7 +1,10 @@
 
 Todo:
-  ☐ get method user data by public url / username @started(22-02-14 11:47)
+  ✔ get method user data by public url / username @started(22-02-14 11:47) @done(22-02-14 12:51) @lasted(1h4m7s)
   ☐ get method user's available event types
+  ☐ post custom types + default event types
+  ✔ create tests @started(22-02-14 12:52) @done(22-02-14 13:00) @lasted(8m23s)
+  ☐ insert TDD methodology
   
   ------------------------------------------------- 
   ✔ start from scratch @done(22-02-09 10:19)

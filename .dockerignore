@@ -12,3 +12,4 @@ additional
 _*
 .DS_Store
 *.sqlite
+*test*
