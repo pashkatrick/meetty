@@ -1,5 +1,9 @@
 
 Todo:
+  ☐ get method user data by public url / username @started(22-02-14 11:47)
+  ☐ get method user's available event types
+  
+  ------------------------------------------------- 
   ✔ start from scratch @done(22-02-09 10:19)
   ✔ get started doc for contributors @started(22-02-09 10:30) @done(22-02-11 21:33) @lasted(2d11h3m55s)
   ✔ finish user model @done(22-02-11 18:50)

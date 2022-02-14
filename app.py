@@ -32,11 +32,13 @@ def complete():
     return dict(status='ok')
 
 
+# TODO: remove
 @app.route('/interests/all', methods=['GET'])
 def get_interests():
     return db.get_interests()
 
 
+# TODO: remove
 @app.route('/sources/all', methods=['GET'])
 def get_sources():
     return db.get_sources()
