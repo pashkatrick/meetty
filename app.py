@@ -27,21 +27,9 @@ def complete():
     dbc = completer.DBCompleter(config=env_config)
     dbc.add_users()
     dbc.add_meetings()
-    dbc.add_sourses()
-    dbc.add_interests()
+    dbc.add_events()
+    dbc.add_availabilities()
     return dict(status='ok')
-
-
-# TODO: remove
-@app.route('/interests/all', methods=['GET'])
-def get_interests():
-    return db.get_interests()
-
-
-# TODO: remove
-@app.route('/sources/all', methods=['GET'])
-def get_sources():
-    return db.get_sources()
 
 
 @app.route('/users', methods=['GET'])

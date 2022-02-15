@@ -19,9 +19,9 @@ class DBController:
         _conf = (self.db, orm)
 
         self.user_model = user(*_conf)
+        self.event_type_model = event_type(*_conf, self.user_model)
+        self.availability_model = availability(*_conf, self.user_model)
         self.meeting_model = meeting(*_conf)
-        self.interest_model = interest(*_conf)
-        self.source_model = source(*_conf)
         self.db.generate_mapping(create_tables=True)
 
     '''
@@ -92,34 +92,6 @@ class DBController:
         result = []
         try:
             for item in self.meeting_model.select()[offset:limit]:
-                result.append(item.to_dict())
-            return dict(data=result)
-        except Exception as e:
-            return dict(data=f'error: {e}')
-
-    '''
-    Interests Methods
-    '''
-
-    @db_session
-    def get_interests(self):
-        result = []
-        try:
-            for item in self.interest_model.select():
-                result.append(item.to_dict())
-            return dict(data=result)
-        except Exception as e:
-            return dict(data=f'error: {e}')
-
-    '''
-    Sources Methods
-    '''
-
-    @db_session
-    def get_sources(self):
-        result = []
-        try:
-            for item in self.source_model.select():
                 result.append(item.to_dict())
             return dict(data=result)
         except Exception as e:

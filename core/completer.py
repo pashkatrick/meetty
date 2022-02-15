@@ -18,8 +18,8 @@ class DBCompleter:
 
         _conf = (db, orm)
         self._user = user(*_conf)
-        self._source = source(*_conf)
-        self._interest = interest(*_conf)
+        self._event_type = event_type(*_conf, self._user)
+        self._availablity = availability(*_conf, self._user)
         self._meeting = meeting(*_conf)
 
         db.generate_mapping(create_tables=True)
@@ -57,23 +57,34 @@ class DBCompleter:
         print('----------------  meetings added  ----------------')
 
     @db_session
-    def add_interests(self):
+    def add_events(self):
         try:
-            self._interest(name='polo')
-            self._interest(name='marketing')
-            self._interest(name='sweets')
-            self._interest(name='books')
-            self._interest(name='travel')
+            self._event_type(
+                title='15 min meeting',
+                users=self._user.select().first(),
+                length=15
+            )
+            self._event_type(
+                title='30 min meeting',
+                users=self._user.select().first(),
+                length=30
+            )
+            self._event_type(
+                title='Stupid hour',
+                users=self._user.select().first(),
+                length=60
+            )
         except Exception as e:
             return print(f'error: {e}')
-        print('----------------  interests added  ----------------')
+        print('----------------  events added  ----------------')
 
     @db_session
-    def add_sourses(self):
-        try:
-            self._source(name='skype')
-            self._source(name='zoom')
-            self._source(name='google')
-        except Exception as e:
-            return print(f'error: {e}')
-        print('----------------  sourses added  ----------------')
+    def add_availabilities(self):
+        for i in range(1, 10):
+            try:
+                self._availablity(
+                    user_id=self._user[i]
+                )
+            except Exception as e:
+                return print(f'error: {e}')
+        print('----------------  availabilities added  ----------------')
