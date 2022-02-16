@@ -1,28 +1,15 @@
 from pony import orm
 from pony.orm import db_session
 from faker import Faker
+from core.base import BaseClass
 from core.models import *
 import random
 
 
-class DBCompleter:
+class DBCompleter(BaseClass):
 
     def __init__(self, config):
-
-        db = orm.Database()
-        # db.bind(provider=config('PROVIDER'), user=config('PSQL_ROOT_USER'),
-        #         password=config('PSQL_ROOT_PASS'),
-        #         host=config('PSQL_HOST'),
-        #         database=config('PSQL_DB'))
-        db.bind(provider='sqlite', filename='../database.sqlite', create_db=True)
-
-        _conf = (db, orm)
-        self._user = user(*_conf)
-        self._source = source(*_conf)
-        self._interest = interest(*_conf)
-        self._meeting = meeting(*_conf)
-
-        db.generate_mapping(create_tables=True)
+        BaseClass.__init__(self, config)
         self.fake = Faker()
 
     @db_session
@@ -30,7 +17,7 @@ class DBCompleter:
         for _ in range(10):
             fake_data = dict(
                 name=self.fake.name(),
-                nick_name=self.fake.simple_profile()['username'],
+                username=self.fake.simple_profile()['username'],
                 avatar='file://<path>/',
                 bio=self.fake.paragraph(nb_sentences=1),
                 lang=random.choice(['ru', 'en', 'gb', 'us'])
@@ -57,23 +44,34 @@ class DBCompleter:
         print('----------------  meetings added  ----------------')
 
     @db_session
-    def add_interests(self):
+    def add_events(self):
         try:
-            self._interest(name='polo')
-            self._interest(name='marketing')
-            self._interest(name='sweets')
-            self._interest(name='books')
-            self._interest(name='travel')
+            self._event_type(
+                title='15 min meeting',
+                users=self._user[1],
+                length=15
+            )
+            self._event_type(
+                title='30 min meeting',
+                users=self._user[1],
+                length=30
+            )
+            self._event_type(
+                title='Stupid hour',
+                users=self._user[2],
+                length=60
+            )
         except Exception as e:
             return print(f'error: {e}')
-        print('----------------  interests added  ----------------')
+        print('----------------  events added  ----------------')
 
     @db_session
-    def add_sourses(self):
-        try:
-            self._source(name='skype')
-            self._source(name='zoom')
-            self._source(name='google')
-        except Exception as e:
-            return print(f'error: {e}')
-        print('----------------  sourses added  ----------------')
+    def add_availabilities(self):
+        for i in range(1, 10):
+            try:
+                self._availability(
+                    users=self._user[i]
+                )
+            except Exception as e:
+                return print(f'error: {e}')
+        print('----------------  availabilities added  ----------------')
