@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "4326e072-8855-4a86-ad95-85296a052cd6",
-		"name": "Randdom Coffee",
+		"name": "Calendario",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -65,7 +65,7 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "Get User",
+					"name": "Get User by id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -77,6 +77,23 @@
 							"path": [
 								"user",
 								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/welchjoseph",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"welchjoseph"
 							]
 						}
 					},
@@ -163,7 +180,7 @@
 				{
 					"name": "Update User",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -182,6 +199,112 @@
 							"path": [
 								"user",
 								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Availability",
+			"item": [
+				{
+					"name": "Get User Days",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/user/6/days",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"6",
+								"days"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Days",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"days\": {\n        \"days\": \"[0, 1, 2]\",\n        \"end_time\": \"1970-01-01T15:00:00.000Z\",\n        \"label\": \"\",\n        \"start_time\": \"1970-01-01T11:00:00.000Z\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{rc-host}}/user/6/days/add",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"6",
+								"days",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event Types",
+			"item": [
+				{
+					"name": "Get User Event types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/user/2/types",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"2",
+								"types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Types",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"types\": {\n        \"default\": true,\n        \"description\": \"\",\n        \"length\": 15,\n        \"slug\": \"15-min\",\n        \"title\": \"15 min meeting\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{rc-host}}/user/2/types/add",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"2",
+								"types",
+								"add"
 							]
 						}
 					},
@@ -262,42 +385,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "All Interests",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{rc-host}}/interests/all",
-					"host": [
-						"{{rc-host}}"
-					],
-					"path": [
-						"interests",
-						"all"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "All Sources",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{rc-host}}/sources/all",
-					"host": [
-						"{{rc-host}}"
-					],
-					"path": [
-						"sources",
-						"all"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [

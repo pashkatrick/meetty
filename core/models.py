@@ -41,12 +41,12 @@ def event_type(db, orm, User):
         default = orm.Optional(bool, default=True)
     return EventType
 
-
+# TODO: rename
 def availability(db, orm, User):
     class Availability(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
         label = orm.Optional(str)
-        user_id = orm.Required(User)
+        users = orm.Set(User)
         days = orm.Required(str, default=str([0,1,2,3,4]))
         start_time = orm.Optional(str, default='1970-01-01T09:00:00.000Z')
         end_time = orm.Optional(str, default='1970-01-01T19:00:00.000Z')

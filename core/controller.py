@@ -1,28 +1,15 @@
+from urllib import response
 from pony import orm
 from pony.orm import db_session
+from core.base import BaseClass
 
 from core.models import *
 
 
-class DBController:
+class DBController(BaseClass):
 
     def __init__(self, config):
-        self.db = orm.Database()
-
-        # self.db.bind(provider='postgres', user=config('PSQL_ROOT_USER'),
-        #              password=config('PSQL_ROOT_PASS'),
-        #              host=config('PSQL_HOST'),
-        #              database=config('PSQL_DB'))
-        self.db.bind(provider='sqlite',
-                     filename='../database.sqlite', create_db=True)
-
-        _conf = (self.db, orm)
-
-        self.user_model = user(*_conf)
-        self.event_type_model = event_type(*_conf, self.user_model)
-        self.availability_model = availability(*_conf, self.user_model)
-        self.meeting_model = meeting(*_conf)
-        self.db.generate_mapping(create_tables=True)
+        BaseClass.__init__(self, config)
 
     '''
     User Methods
@@ -31,7 +18,7 @@ class DBController:
     @db_session
     def get_user_by_id(self, _id: int, full: bool):
         try:
-            usr = self.user_model[_id]
+            usr = self._user[_id]
             response = usr.to_dict() if full else f'{usr.name}'
             return dict(data=response)
         except Exception as e:
@@ -40,8 +27,7 @@ class DBController:
     @db_session
     def get_user_by_name(self, _username: str, full: bool):
         try:
-            usr = self.user_model.select(
-                lambda u: _username in u.username).first()
+            usr = self._user.get(username=_username)
             response = usr.to_dict() if full else f'{usr.name}'
             return dict(data=response)
         except Exception as e:
@@ -51,7 +37,7 @@ class DBController:
     def get_users(self, limit: int = 100, offset: int = 0):
         result = []
         try:
-            for item in self.user_model.select()[offset:limit]:
+            for item in self._user.select()[offset:limit]:
                 result.append(item.to_dict())
             return dict(data=result)
         except Exception as e:
@@ -60,14 +46,78 @@ class DBController:
     @db_session
     def add_user(self, user_object):
         try:
-            self.user_model(**user_object)
+            self._user(**user_object)
             return dict(data='ok')
         except Exception as e:
             return dict(data=f'error: {e}')
 
     @db_session
     def update_user(self, update_id, update_data):
-        usr = self.user_model[update_id]
+        usr = self._user[update_id]
+        try:
+            usr.set(**update_data)
+            return dict(data='ok')
+        except Exception as e:
+            return dict(data=f'error: {e}')
+
+    '''
+    Availability Methods
+    '''
+    @db_session
+    def get_days_by_user_id(self, _id):
+        try:
+            days = self._availability.select(
+                lambda a: self._user[_id] in a.users
+            )
+            if days:
+                response = [item.to_dict() for item in days]
+            return dict(data=response)
+        except Exception as e:
+            return dict(data=f'error: {e}')
+
+    @db_session
+    def add_days(self, _id, day_object):
+        try:
+            self._availability(user_id=_id, **day_object)
+            return dict(data='ok')
+        except Exception as e:
+            return dict(data=f'error: {e}')
+
+    @db_session
+    def update_days(self, update_id, update_data):
+        usr = self._availability[update_id]
+        try:
+            usr.set(**update_data)
+            return dict(data='ok')
+        except Exception as e:
+            return dict(data=f'error: {e}')
+
+    '''
+    Event Types Methods
+    '''
+    @db_session
+    def get_event_types_by_user_id(self, _id):
+        try:
+            event_types = self._event_type.select(
+                lambda e: self._user[_id] in e.users
+            )
+            if event_types:
+                response = [item.to_dict() for item in event_types]
+            return dict(data=response)
+        except Exception as e:
+            return dict(data=f'error: {e}')
+
+    @db_session
+    def add_types(self, _id, type_object):
+        try:
+            self._event_type(users=self._user[_id], **type_object)
+            return dict(data='ok')
+        except Exception as e:
+            return dict(data=f'error: {e}')
+
+    @db_session
+    def update_types(self, update_id, update_data):
+        usr = self._event_type[update_id]
         try:
             usr.set(**update_data)
             return dict(data='ok')
@@ -77,11 +127,10 @@ class DBController:
     '''
     Meeting Methods
     '''
-
     @db_session
     def get_meeting(self, _id: int, full: bool):
         try:
-            mt = self.meeting_model[_id]
+            mt = self._meeting[_id]
             response = mt.to_dict() if full else f'{mt.link}'
             return dict(data=response)
         except Exception as e:
@@ -91,7 +140,7 @@ class DBController:
     def get_meetings(self, limit: int = 100, offset: int = 0):
         result = []
         try:
-            for item in self.meeting_model.select()[offset:limit]:
+            for item in self._meeting.select()[offset:limit]:
                 result.append(item.to_dict())
             return dict(data=result)
         except Exception as e:
