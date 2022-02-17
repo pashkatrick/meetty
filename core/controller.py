@@ -128,11 +128,10 @@ class DBController(BaseClass):
     Meeting Methods
     '''
     @db_session
-    def get_meeting(self, _id: int, full: bool):
+    def get_meeting(self, _id: int):
         try:
             mt = self._meeting[_id]
-            response = mt.to_dict() if full else f'{mt.link}'
-            return dict(data=response)
+            return dict(data=mt.to_dict())
         except Exception as e:
             return dict(data=f'error: {e}')
 

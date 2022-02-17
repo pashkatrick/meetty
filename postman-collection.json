@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4326e072-8855-4a86-ad95-85296a052cd6",
+		"_postman_id": "eb24b58f-009f-4dc9-b93a-3efaf35b03f2",
 		"name": "Calendario",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -88,12 +88,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{rc-host}}/welchjoseph",
+							"raw": "{{rc-host}}/<username>",
 							"host": [
 								"{{rc-host}}"
 							],
 							"path": [
-								"welchjoseph"
+								"<username>"
 							]
 						}
 					},
@@ -321,37 +321,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{rc-host}}/meeting/3",
+							"raw": "{{rc-host}}/meeting/2",
 							"host": [
 								"{{rc-host}}"
 							],
 							"path": [
 								"meeting",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Full Meeting",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{rc-host}}/meeting/3?full=false",
-							"host": [
-								"{{rc-host}}"
-							],
-							"path": [
-								"meeting",
-								"3"
-							],
-							"query": [
-								{
-									"key": "full",
-									"value": "false"
-								}
+								"2"
 							]
 						}
 					},
