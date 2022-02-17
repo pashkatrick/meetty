@@ -97,10 +97,8 @@ def get_meetings():
 
 
 @app.route('/meeting/<int:meeting_id>', methods=['GET'])
-def get_meeting(meeting_id, full=True):
-    if request.args.get('full'):
-        full = True
-    return db.get_meeting(_id=meeting_id, full=full)
+def get_meeting(meeting_id):
+    return db.get_meeting(_id=meeting_id)
 
 
 if __name__ == '__main__':

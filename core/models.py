@@ -1,5 +1,6 @@
 from email.policy import default
 from pydoc import describe
+from tkinter import EventType
 
 
 def user(db, orm):
@@ -20,10 +21,9 @@ def user(db, orm):
         metadata = orm.Optional(str)
         hide_branding = orm.Optional(str)
         # sub models
-        availability_id = orm.Set('Availability')
-        # availability = orm.Set(Availability)
+        availabilities = orm.Set('Availability')
         schedule = orm.Optional(str)
-        booking = orm.Optional(str)
+        # meetings = orm.Set('Meeting')
         event_types = orm.Set('EventType')
         credentials = orm.Optional(str)
         plan = orm.Optional(str)
@@ -35,6 +35,7 @@ def event_type(db, orm, User):
         _id = orm.PrimaryKey(int, auto=True)
         title = orm.Required(str)
         users = orm.Set(User)
+        # meeting = orm.Set('Meeting')
         slug = orm.Optional(str)
         length = orm.Required(int)
         description = orm.Optional(str)
@@ -42,12 +43,14 @@ def event_type(db, orm, User):
     return EventType
 
 # TODO: rename
+
+
 def availability(db, orm, User):
     class Availability(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
         label = orm.Optional(str)
         users = orm.Set(User)
-        days = orm.Required(str, default=str([0,1,2,3,4]))
+        days = orm.Required(str, default=str([0, 1, 2, 3, 4]))
         start_time = orm.Optional(str, default='1970-01-01T09:00:00.000Z')
         end_time = orm.Optional(str, default='1970-01-01T19:00:00.000Z')
     return Availability
@@ -56,8 +59,18 @@ def availability(db, orm, User):
 def meeting(db, orm):
     class Meeting(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
-        type = orm.Required(str)
-        app = orm.Optional(str)
-        link = orm.Optional(str)
-        pair = orm.Optional(str)
+        uuid = orm.Required(str)
+        agenda = orm.Optional(str)
+        description = orm.Optional(str)
+        title = orm.Optional(str)
+        user_id = orm.Required(int)
+        offline = orm.Optional(bool, default=0)
+        type_id = orm.Required(int)
+        start_time = orm.Optional(str, default='1970-01-01T10:00:00.000Z')
+        end_time = orm.Optional(str, default='1970-01-01T10:30:00.000Z')
+        status = orm.Optional(str)
+        confirmed = orm.Optional(bool)
+        rejected = orm.Optional(bool)
+        paid = orm.Optional(bool)
+        provider = orm.Optional(str)
     return Meeting

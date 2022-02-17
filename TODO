@@ -1,30 +1,25 @@
 
 Todo:
 
-  ☐ add schedules via availability cross events
-  ☐ ?add event/meeting entity
+  ✘ add schedules via availability cross events @cancelled(22-02-17 10:02)
+  ✔ ?add event/meeting entity @done(22-02-17 10:53)
   ☐ test integration with ics or CalDAV
   ☐ define classes and modules to prepare integrations and scale
-  ☐ ?update methods if need
+  ☐ ?update methods need
 
-  ------------------------------------------------- 
-  ✔ get method user data by public url / username @started(22-02-14 11:47) @done(22-02-14 12:51) @lasted(1h4m7s)
-  ✔ get method user's available event types @started(22-02-15 22:11) @done(22-02-15 22:49) @lasted(38m7s)
-  ✔ post custom types + default event types @started(22-02-16 11:09) @done(22-02-16 15:07) @lasted(3h58m50s)
-  ✔ add all models @started(22-02-16 11:09) @done(22-02-16 15:07) @lasted(3h58m41s)
-  ✔ create tests @started(22-02-14 12:52) @done(22-02-14 13:00) @lasted(8m23s)
-  ✔ insert TDD methodology @done(22-02-15 22:11)
-  ✔ add base class with models and implement it to others @started(22-02-16 11:09) @done(22-02-16 11:25) @lasted(16m53s)
-  ✔ many-to-many for availabilites @done(22-02-16 15:07)
-  
-  ------------------------------------------------- 
-  ✔ start from scratch @done(22-02-09 10:19)
-  ✔ get started doc for contributors @started(22-02-09 10:30) @done(22-02-11 21:33) @lasted(2d11h3m55s)
-  ✔ finish user model @done(22-02-11 18:50)
-  ✔ add meeting model @done(22-02-11 18:50)
-  ✔ add mocks/bootstrap to routes for FE @done(22-02-11 20:42)
-  ✔ actualize postman collection @done(22-02-11 20:53)
-  ✔ dockerfile sharing @done(22-02-11 21:33)
-
-  
-  
+Archive:
+  ✔ get method user data by public url / username @started(22-02-14 11:47) @done(22-02-14 12:51) @lasted(1h4m7s) @project(Todo)
+  ✔ get method user's available event types @started(22-02-15 22:11) @done(22-02-15 22:49) @lasted(38m7s) @project(Todo)
+  ✔ post custom types + default event types @started(22-02-16 11:09) @done(22-02-16 15:07) @lasted(3h58m50s) @project(Todo)
+  ✔ add all models @started(22-02-16 11:09) @done(22-02-16 15:07) @lasted(3h58m41s) @project(Todo)
+  ✔ create tests @started(22-02-14 12:52) @done(22-02-14 13:00) @lasted(8m23s) @project(Todo)
+  ✔ insert TDD methodology @done(22-02-15 22:11) @project(Todo)
+  ✔ add base class with models and implement it to others @started(22-02-16 11:09) @done(22-02-16 11:25) @lasted(16m53s) @project(Todo)
+  ✔ many-to-many for availabilites @done(22-02-16 15:07) @project(Todo)
+  ✔ start from scratch @done(22-02-09 10:19) @project(Todo)
+  ✔ get started doc for contributors @started(22-02-09 10:30) @done(22-02-11 21:33) @lasted(2d11h3m55s) @project(Todo)
+  ✔ finish user model @done(22-02-11 18:50) @project(Todo)
+  ✔ add meeting model @done(22-02-11 18:50) @project(Todo)
+  ✔ add mocks/bootstrap to routes for FE @done(22-02-11 20:42) @project(Todo)
+  ✔ actualize postman collection @done(22-02-11 20:53) @project(Todo)
+  ✔ dockerfile sharing @done(22-02-11 21:33) @project(Todo)

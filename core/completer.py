@@ -4,6 +4,7 @@ from faker import Faker
 from core.base import BaseClass
 from core.models import *
 import random
+import uuid
 
 
 class DBCompleter(BaseClass):
@@ -30,12 +31,15 @@ class DBCompleter(BaseClass):
 
     @db_session
     def add_meetings(self):
-        for i in range(5):
+        for i in range(3):
             fake_data = dict(
-                type=random.choice(['offline', 'online']),
-                app=random.choice(['zoom', 'google', 'skype']),
-                link='https://app.host/<path>/',
-                pair=f'{i},{i+1}'
+                uuid=str(uuid.uuid4()),
+                agenda=self.fake.paragraph(nb_sentences=1),
+                description=self.fake.paragraph(nb_sentences=1),
+                title=f'{i*3}0 minute meeting',
+                user_id=i,
+                type_id=i,
+                status='accepted'
             )
             try:
                 self._meeting(**fake_data)
