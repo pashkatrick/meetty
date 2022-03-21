@@ -2,13 +2,28 @@
 
 ## Get Started 🚀
 
+ - [docker]()
+ - [sources]()
+
 ### Requirements
 
  - [git](https://git-scm.com/downloads)
  - [docker](https://docs.docker.com/get-docker/)
  - [postman](https://www.postman.com/downloads/)
 
-### Setup
+
+### Docker only
+
+before the start you need 
+```
+docker pull pashkatrick/calendario
+```
+and then 
+```
+docker run --rm -it pashkatrick/calendario
+```
+
+### Sources + docker
 
 Clone  repository
 ```
