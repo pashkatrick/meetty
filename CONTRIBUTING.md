@@ -2,8 +2,8 @@
 
 ## Get Started 🚀
 
- - [docker]()
- - [sources]()
+ - [docker](#docker-only)
+ - [sources](#sources-and-docker)
 
 ### Requirements
 
@@ -23,7 +23,7 @@ and then
 docker run --rm -it pashkatrick/calendario
 ```
 
-### Sources + docker
+### Sources and docker
 
 Clone  repository
 ```
