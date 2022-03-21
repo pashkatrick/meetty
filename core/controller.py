@@ -1,5 +1,4 @@
-from urllib import response
-from pony import orm
+from datetime import datetime, timedelta
 from pony.orm import db_session
 from core.base import BaseClass
 
@@ -91,6 +90,22 @@ class DBController(BaseClass):
             return dict(data='ok')
         except Exception as e:
             return dict(data=f'error: {e}')
+
+    def get_slots(self, user_id, event_type_value, date):
+        # TODO: upgrafe it
+        # take a meetings
+        # set free status to free slots
+        days = self.get_days_by_user_id(user_id)
+        slots = []
+        for day in days['data']:
+
+            ds = datetime.strptime(day['start_time'], '%Y-%d-%mT%H:%M:%S.%fZ')
+            de = datetime.strptime(day['end_time'], '%Y-%d-%mT%H:%M:%S.%fZ')
+            
+            while ds < de:
+                ds += timedelta(minutes=event_type_value)
+                slots.append(ds.strftime("%H:%M"))
+        return slots
 
     '''
     Event Types Methods
