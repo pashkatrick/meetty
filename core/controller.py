@@ -62,21 +62,32 @@ class DBController(BaseClass):
 
     @db_session
     def sign_up(self, _login: str, _pass: str):
-        target_user = self._user.select(
-            lambda u: u.username == _login
-        )
+        target_user = self.is_user_exist(_login)
         if target_user:
-            return dict(data='user already exist')
-        # TODO: fix salt
-        return self.add_user(dict(username=_login, password=bcrypt.hashpw(_pass, 'super-secret')))
+            return dict(data='user already exist')            
+        else:
+            # TODO: fix salt
+            return self.add_user(dict(username=_login, password=bcrypt.hashpw(_pass, 'super-secret')))
 
     @db_session
     def sign_in(self, _login: str, _pass: str):
-        target_user = self._user.select(
-            lambda u: u.username == _login
-        )
-        # TODO: fix salt
-        return bcrypt.checkpw(_pass, bcrypt.hashpw(target_user['passord'], 'super-secret'))
+        target_user = self.is_user_exist(_login)
+        if not target_user:
+            return dict(data='user not found')   
+        else:
+            # TODO: fix salt
+            return bcrypt.checkpw(_pass, bcrypt.hashpw(target_user['passord'], 'super-secret'))
+            # return True
+
+    @db_session
+    def is_user_exist(self, _login: str):
+        try:
+            target_user = self._user.select(
+                lambda u: u.username == _login
+            )
+            return target_user
+        except:        
+            return False
 
     '''
     Availability Methods

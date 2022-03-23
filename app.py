@@ -31,7 +31,7 @@ def index():
     return dict(body='Welcome to Calendario')
 
 
-# deprecated
+# @deprecated
 @app.route('/bootstrap')
 def complete():
     dbc = completer.DBCompleter(config=env_config)
@@ -42,14 +42,15 @@ def complete():
     return dict(status='ok')
 
 
-@app.route('/auth/signup')
+@app.route('/auth/signup', methods=['POST'])
 def registration():
     user_login = request.json['login']
     user_pass = request.json['password']
-    pass
+    if db.sign_up(user_login, user_pass):
+        return dict(status='user added')
 
 
-@app.route('/auth/signin')
+@app.route('/auth/signin', methods=['POST'])
 def login():
     user_login = request.json['login']
     user_pass = request.json['password']
@@ -80,6 +81,7 @@ def get_user_by_name(username, full=False):
     return db.get_user_by_name(_username=username, full=full)
 
 
+# @deprecated
 @app.route('/user/add', methods=['POST'])
 def add_user():
     user_object = request.json['user']
