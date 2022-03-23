@@ -9,7 +9,7 @@ app = Flask(__name__)
 swagger = Swagger(app)
 CORS(app)
 
-app.config["JWT_SECRET_KEY"] = "super-secret"  # TODO: Change this!
+app.config["JWT_SECRET_KEY"] = 'super-secret'  # TODO: Change this!
 jwt = JWTManager(app)
 
 env = app.config['ENV']
@@ -47,7 +47,9 @@ def registration():
     user_login = request.json['login']
     user_pass = request.json['password']
     if db.sign_up(user_login, user_pass):
-        return dict(status='user added')
+        return dict(status='ok')
+    else:
+        return dict(status='user already exist')        
 
 
 @app.route('/auth/signin', methods=['POST'])
@@ -57,6 +59,8 @@ def login():
     if db.sign_in(user_login, user_pass):
         access_token = create_access_token(identity=user_login)
         return dict(access_token=access_token)
+    else:
+        return dict(status='user doesn\'t exist')
 
 
 @app.route('/auth/signout')

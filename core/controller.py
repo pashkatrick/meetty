@@ -63,30 +63,28 @@ class DBController(BaseClass):
     @db_session
     def sign_up(self, _login: str, _pass: str):
         target_user = self.is_user_exist(_login)
-        if target_user:
-            return dict(data='user already exist')            
-        else:
+        if not target_user:
             # TODO: fix salt
-            return self.add_user(dict(username=_login, password=bcrypt.hashpw(_pass, 'super-secret')))
+            response = self.add_user(dict(username=_login, name=_login, password=str(
+                bcrypt.hashpw(_pass.encode('utf-8'), b'$2b$12$xdZ1i4SXX6OwCx2WiRJEme')
+            )))
+            return response
 
     @db_session
     def sign_in(self, _login: str, _pass: str):
         target_user = self.is_user_exist(_login)
-        if not target_user:
-            return dict(data='user not found')   
-        else:
+        if target_user:
             # TODO: fix salt
-            return bcrypt.checkpw(_pass, bcrypt.hashpw(target_user['passord'], 'super-secret'))
-            # return True
+            return bcrypt.checkpw(_pass, bcrypt.hashpw(target_user.password.encode('utf-8'), b'$2b$12$xdZ1i4SXX6OwCx2WiRJEme'))
 
     @db_session
     def is_user_exist(self, _login: str):
         try:
             target_user = self._user.select(
                 lambda u: u.username == _login
-            )
+            ).first()
             return target_user
-        except:        
+        except:
             return False
 
     '''
