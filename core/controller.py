@@ -1,9 +1,8 @@
 from datetime import datetime, timedelta
-from click import password_option
+# from click import password_option
 from pony.orm import db_session
 from core.base import BaseClass
 import bcrypt
-
 from core.models import *
 
 

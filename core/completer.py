@@ -1,4 +1,4 @@
-from pony import orm
+# from pony import orm
 from pony.orm import db_session
 from faker import Faker
 from core.base import BaseClass

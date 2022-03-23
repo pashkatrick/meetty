@@ -1,11 +1,13 @@
 from flask import Flask, request
-from core import controller, completer
+from core import completer, controller
 from decouple import Config, RepositoryEnv
 from flasgger import Swagger, swag_from
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+from flask_cors import CORS
 
 app = Flask(__name__)
 swagger = Swagger(app)
+CORS(app)
 
 app.config["JWT_SECRET_KEY"] = "super-secret"  # TODO: Change this!
 jwt = JWTManager(app)
@@ -29,6 +31,7 @@ def index():
     return dict(body='Welcome to Calendario')
 
 
+# deprecated
 @app.route('/bootstrap')
 def complete():
     dbc = completer.DBCompleter(config=env_config)

@@ -1,8 +1,3 @@
-from email.policy import default
-from pydoc import describe
-from tkinter import EventType
-
-
 def user(db, orm):
     class User(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
