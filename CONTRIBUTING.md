@@ -27,22 +27,22 @@ docker run --rm -it pashkatrick/calendario
 
 Clone  repository
 ```
-git clone https://github.com/pashkatrick/randomcofffee.git
+git clone https://github.com/pashkatrick/calendario.git
 ```
 
 Go into repository folder
 ```
-cd randomcofffee
+cd calendario
 ```
 
 Build [Dockerfile](/Dockerfile) with specific tag as like:
 ```
-docker build -t rc-api .
+docker build -t calendario .
 ```
 
 Run docker container
 ```
-docker run --rm -it -p 5000:5000/tcp rc-api
+docker run --rm -it -p 5000:5000/tcp calendario
 ```
 
 Check ```localhost:5000``` in your browser, should be:   
