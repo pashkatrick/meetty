@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-# from click import password_option
 from pony.orm import db_session
 from core.base import BaseClass
 import bcrypt
@@ -62,20 +61,19 @@ class DBController(BaseClass):
 
     @db_session
     def sign_up(self, _login: str, _pass: str):
-        target_user = self.is_user_exist(_login)
-        if not target_user:
+        is_target_user = self.is_user_exist(_login)
+        if not is_target_user:
             # TODO: fix salt
-            response = self.add_user(dict(username=_login, name=_login, password=str(
-                bcrypt.hashpw(_pass.encode('utf-8'), b'$2b$12$xdZ1i4SXX6OwCx2WiRJEme')
-            )))
+            response = self.add_user(dict(username=_login, name=_login, password=_pass))
             return response
 
     @db_session
     def sign_in(self, _login: str, _pass: str):
-        target_user = self.is_user_exist(_login)
-        if target_user:
+        is_target_user = self.is_user_exist(_login)
+        if is_target_user:
             # TODO: fix salt
-            return bcrypt.checkpw(_pass, bcrypt.hashpw(target_user.password.encode('utf-8'), b'$2b$12$xdZ1i4SXX6OwCx2WiRJEme'))
+            # a = bcrypt.checkpw(_pass.encode('utf-8'), bcrypt.hashpw(target_user.password.encode('utf-8'), b'$2b$12$xdZ1i4SXX6OwCx2WiRJEme'))
+            return is_target_user
 
     @db_session
     def is_user_exist(self, _login: str):
@@ -121,8 +119,6 @@ class DBController(BaseClass):
 
     def get_slots(self, user_id, event_type_value, date):
         # TODO: upgrafe it
-        # take a meetings
-        # set free status to free slots
         days = self.get_days_by_user_id(user_id)
         slots = []
         for day in days['data']:
