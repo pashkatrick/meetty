@@ -1,8 +1,3 @@
-from email.policy import default
-from pydoc import describe
-from tkinter import EventType
-
-
 def user(db, orm):
     class User(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
@@ -13,7 +8,7 @@ def user(db, orm):
         lang = orm.Optional(str)
         email = orm.Optional(str)
         created_date = orm.Optional(str)
-        password = orm.Optional(str)
+        password = orm.Optional(str, hidden=True)
         time_zone = orm.Optional(str)
         strat_time = orm.Optional(str)
         theme = orm.Optional(str)

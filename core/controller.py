@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from pony.orm import db_session
 from core.base import BaseClass
-
+import bcrypt
 from core.models import *
 
 
@@ -59,6 +59,32 @@ class DBController(BaseClass):
         except Exception as e:
             return dict(data=f'error: {e}')
 
+    @db_session
+    def sign_up(self, _login: str, _pass: str):
+        is_target_user = self.is_user_exist(_login)
+        if not is_target_user:
+            # TODO: fix salt
+            response = self.add_user(dict(username=_login, name=_login, password=_pass))
+            return response
+
+    @db_session
+    def sign_in(self, _login: str, _pass: str):
+        is_target_user = self.is_user_exist(_login)
+        if is_target_user:
+            # TODO: fix salt
+            # a = bcrypt.checkpw(_pass.encode('utf-8'), bcrypt.hashpw(target_user.password.encode('utf-8'), b'$2b$12$xdZ1i4SXX6OwCx2WiRJEme'))
+            return is_target_user
+
+    @db_session
+    def is_user_exist(self, _login: str):
+        try:
+            target_user = self._user.select(
+                lambda u: u.username == _login
+            ).first()
+            return target_user
+        except:
+            return False
+
     '''
     Availability Methods
     '''
@@ -93,15 +119,13 @@ class DBController(BaseClass):
 
     def get_slots(self, user_id, event_type_value, date):
         # TODO: upgrafe it
-        # take a meetings
-        # set free status to free slots
         days = self.get_days_by_user_id(user_id)
         slots = []
         for day in days['data']:
 
             ds = datetime.strptime(day['start_time'], '%Y-%d-%mT%H:%M:%S.%fZ')
             de = datetime.strptime(day['end_time'], '%Y-%d-%mT%H:%M:%S.%fZ')
-            
+
             while ds < de:
                 ds += timedelta(minutes=event_type_value)
                 slots.append(ds.strftime("%H:%M"))
