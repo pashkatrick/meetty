@@ -21,4 +21,4 @@ class TestUtiles:
     def test_sign_in_with_user(self):
         response = requests.post(f'{host}/auth/signin', json=self.payload)
         assert response.status_code == 200
-        assert response.json()['data']
+        assert response.json()['access_token']
