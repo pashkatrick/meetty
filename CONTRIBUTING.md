@@ -42,7 +42,7 @@ docker build -t calendario .
 
 Run docker container
 ```
-docker run --rm -it -p 5000:5000/tcp calendario
+docker run --rm -it -p 5000:5000 pashkatrick/calendario
 ```
 
 Check ```localhost:5000``` in your browser, should be:   
