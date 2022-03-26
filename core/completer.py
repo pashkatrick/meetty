@@ -31,7 +31,7 @@ class DBCompleter(BaseClass):
 
     @db_session
     def add_meetings(self):
-        for i in range(3):
+        for i in range(10):
             fake_data = dict(
                 uuid=str(uuid.uuid4()),
                 agenda=self.fake.paragraph(nb_sentences=1),

@@ -21,3 +21,14 @@ class BaseClass(object):
         self._availability = availability(*_conf, self._user)
         self._meeting = meeting(*_conf)
         self.db.generate_mapping(create_tables=True)
+
+
+def exc_handler(func):
+    def wrapper(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
+            return result
+        except Exception as e:
+            print(f'error in method {func.__name__}: {e}')
+            return False
+    return wrapper
