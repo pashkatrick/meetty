@@ -20,7 +20,7 @@ docker pull pashkatrick/calendario
 ```
 and then 
 ```
-docker run --rm -it pashkatrick/calendario
+docker run --rm -it -p 5000:5000 pashkatrick/calendario
 ```
 
 ### Sources and docker
