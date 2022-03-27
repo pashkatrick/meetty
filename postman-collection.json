@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "72743ca9-386f-478e-b336-8c611023c947",
+		"_postman_id": "c990f1d3-e1f3-4dd9-a319-7d82278f9afd",
 		"name": "Calendario",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -54,7 +54,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"login\": \"johndoe20\",\n    \"password\": \"1D1\"\n}",
+							"raw": "{\n    \"login\": \"johndoe-47\",\n    \"password\": \"1D1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -81,7 +81,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"login\": \"johndoe20\",\n    \"password\": \"1D1\"\n}",
+							"raw": "{\n    \"login\": \"johndoe40\",\n    \"password\": \"1D1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -108,7 +108,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0ODExMTc3OSwianRpIjoiM2I3Nzk2MWYtY2RjZS00MzcxLTkzODgtNGRiY2RmOWI4OWQ2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImpvaG5kb2UyMCIsIm5iZiI6MTY0ODExMTc3OSwiZXhwIjoxNjQ4MTEyNjc5fQ.5XdEczIijJyhQqwnHf0eR3jvr4_jDINgPt-B446UJBc",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0ODIzMjAwOCwianRpIjoiN2QwZWJhNGEtYmY1Mi00ZjRhLWJlNWYtNThmNzVkNTJmODczIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImpvaG5kb2UtNDciLCJuYmYiOjE2NDgyMzIwMDgsImV4cCI6MTY0ODIzMjkwOH0.2kqQbSYZoJBPQq6uY69X6145gdNcqZVSw2DPuZ2p6CY",
 								"type": "default"
 							}
 						],
@@ -153,12 +153,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{rc-host}}/volson",
+							"raw": "{{rc-host}}/pinedajames",
 							"host": [
 								"{{rc-host}}"
 							],
 							"path": [
-								"volson"
+								"pinedajames"
 							]
 						}
 					},
@@ -216,7 +216,7 @@
 					"response": []
 				},
 				{
-					"name": "Add User",
+					"name": "[obsolete] Add User",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -264,59 +264,6 @@
 							"path": [
 								"user",
 								"update"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Availability",
-			"item": [
-				{
-					"name": "Get User Days",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{rc-host}}/user/2/days",
-							"host": [
-								"{{rc-host}}"
-							],
-							"path": [
-								"user",
-								"2",
-								"days"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add Days",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"days\": {\n        \"days\": \"[0, 1, 2]\",\n        \"end_time\": \"1970-01-01T15:00:00.000Z\",\n        \"label\": \"\",\n        \"start_time\": \"1970-01-01T11:00:00.000Z\"\n    }\n}"
-						},
-						"url": {
-							"raw": "{{rc-host}}/user/6/days/add",
-							"host": [
-								"{{rc-host}}"
-							],
-							"path": [
-								"user",
-								"6",
-								"days",
-								"add"
 							]
 						}
 					},
@@ -378,6 +325,63 @@
 			]
 		},
 		{
+			"name": "Busy Time",
+			"item": []
+		},
+		{
+			"name": "Free Time",
+			"item": [
+				{
+					"name": "Get User Time Frames",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/user/6/free",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"6",
+								"free"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Free Time Frames",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"slots\": [\n        {\n            \"day\": 6,\n            \"time_from\": 540,\n            \"time_to\": 630\n        },\n        {\n            \"day\": 7,\n            \"time_from\": 540,\n            \"time_to\": 1020\n        }        \n    ]\n}"
+						},
+						"url": {
+							"raw": "{{rc-host}}/user/6/free/add",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"user",
+								"6",
+								"free",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Meetings",
 			"item": [
 				{
@@ -393,6 +397,30 @@
 							"path": [
 								"meeting",
 								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Full Meeting",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{rc-host}}/meeting/2?full=true",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"meeting",
+								"2"
+							],
+							"query": [
+								{
+									"key": "full",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -420,6 +448,33 @@
 									"key": "offset",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Meeting",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"agenda\": \"Citizen point factor poor serve now.\",\n        \"confirmed\": null,\n        \"description\": \"Loss else heart management cell fight discuss.\",\n        \"end_time\": \"1970-01-01T10:30:00.000Z\",\n        \"offline\": false,\n        \"paid\": null,\n        \"provider\": \"\",\n        \"rejected\": null,\n        \"start_time\": \"1970-01-01T10:00:00.000Z\",\n        \"status\": \"accepted\",\n        \"title\": \"30 minute meeting\",\n        \"type_id\": 1,\n        \"user_id\": 1\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rc-host}}/meeting/add",
+							"host": [
+								"{{rc-host}}"
+							],
+							"path": [
+								"meeting",
+								"add"
 							]
 						}
 					},
