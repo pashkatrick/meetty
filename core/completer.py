@@ -1,4 +1,3 @@
-# from pony import orm
 from pony.orm import db_session
 from faker import Faker
 from core.base import BaseClass
@@ -74,8 +73,23 @@ class DBCompleter(BaseClass):
         for i in range(1, 10):
             try:
                 self._availability(
-                    users=self._user[i]
-                )
+                    users=self._user[i],
+                    day=0,
+                    time_from=540,
+                    time_to=1020
+                ),
+                self._availability(
+                    users=self._user[i],
+                    day=1,
+                    time_from=540,
+                    time_to=600
+                ),
+                self._availability(
+                    users=self._user[i],
+                    day=3,
+                    time_from=630,
+                    time_to=1020
+                )                                    
             except Exception as e:
                 return print(f'error: {e}')
         print('----------------  availabilities added  ----------------')

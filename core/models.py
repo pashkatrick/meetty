@@ -37,17 +37,15 @@ def event_type(db, orm, User):
         default = orm.Optional(bool, default=True)
     return EventType
 
+
 # TODO: rename
-
-
 def availability(db, orm, User):
     class Availability(db.Entity):
-        _id = orm.PrimaryKey(int, auto=True)
-        label = orm.Optional(str)
+        _id = orm.PrimaryKey(int, auto=True, hidden=True)
         users = orm.Set(User)
-        days = orm.Required(str, default=str([0, 1, 2, 3, 4]))
-        start_time = orm.Optional(str, default='1970-01-01T09:00:00.000Z')
-        end_time = orm.Optional(str, default='1970-01-01T19:00:00.000Z')
+        day = orm.Optional(int)
+        time_from = orm.Optional(int)
+        time_to = orm.Optional(int)
     return Availability
 
 
@@ -61,8 +59,8 @@ def meeting(db, orm):
         user_id = orm.Required(int)
         offline = orm.Optional(bool, default=0)
         type_id = orm.Required(int)
-        start_time = orm.Optional(str, default='1970-01-01T10:00:00.000Z')
-        end_time = orm.Optional(str, default='1970-01-01T10:30:00.000Z')
+        time_from = orm.Optional(int)
+        time_to = orm.Optional(int)
         status = orm.Optional(str)
         confirmed = orm.Optional(bool)
         rejected = orm.Optional(bool)
