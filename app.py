@@ -1,5 +1,5 @@
 from flask import Flask, request
-from core import common_controller, completer, user_controller, meeting_controller
+from core import event_controller, user_controller, meeting_controller, availability_controller
 from decouple import Config, RepositoryEnv
 from flasgger import Swagger, swag_from
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
@@ -16,9 +16,10 @@ env = app.config['ENV']
 dbg = app.config['DEBUG']
 print(f'env: {env}, debug: {dbg}')
 env_config = Config(RepositoryEnv(f'./config/{env}.env'))
-db = common_controller.DBController(config=env_config)
+dbe = event_controller.DBController(config=env_config)
 dbu = user_controller.DBUserController(config=env_config)
 dbm = meeting_controller.DBMeetingController(config=env_config)
+dba = availability_controller.DBTimeController(config=env_config)
 
 
 @app.route('/ready')
@@ -31,17 +32,6 @@ def ready():
 @app.route('/')
 def index():
     return dict(data='Welcome to Calendario')
-
-
-# @deprecated
-# @app.route('/bootstrap')
-def complete():
-    dbc = completer.DBCompleter(config=env_config)
-    dbc.add_users()
-    dbc.add_meetings()
-    dbc.add_events()
-    dbc.add_availabilities()
-    return dict(status='ok')
 
 
 @app.route('/auth/signup', methods=['POST'])
@@ -65,14 +55,8 @@ def login():
         return dict(data='user doesn\'t exist')
 
 
-# @obsolete
-# @app.route('/auth/signout')
-def logout():
-    pass
-
-
 @app.route('/users', methods=['GET'])
-@swag_from('swagger/users.yml')
+@swag_from('swagger/get_users.yml')
 def get_users():
     _args = {**request.args}
     for key in _args:
@@ -82,17 +66,11 @@ def get_users():
 
 @app.route('/<username>', methods=['GET'])
 @app.route('/user/<username>', methods=['GET'])
+@swag_from('swagger/get_user.yml')
 def get_user_by_name(username, full=False):
     if request.args.get('full'):
         full = True
     return dbu.get_user_by_name(_username=username, full=full)
-
-
-# @deprecated
-@app.route('/user/add', methods=['POST'])
-def add_user():
-    user_object = request.json['user']
-    return dbu.add_user(user_object)
 
 
 @app.route('/user/update', methods=['PUT'])
@@ -108,25 +86,51 @@ def get_user_by_id(user_id, full=False):
         full = True
     return dbu.get_user_by_id(_id=user_id, full=full)
 
-
-@app.route('/user/<int:user_id>/days', methods=['GET'])
-def get_days_by_user_id(user_id):
-    return db.get_days_by_user_id(_id=user_id)
+# ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
-@app.route('/user/<int:user_id>/days/add', methods=['POST'])
-def add_user_days(user_id):
-    return db.add_days(_id=user_id, day_object=request.json['days'])
+@app.route('/user/<int:user_id>/free', methods=['GET'])
+def get_free_slots_by_user_id(user_id):
+    return dba.get_free_slots_by_user_id(_id=user_id)
+
+
+@app.route('/user/<int:user_id>/free/add', methods=['POST'])
+def add_user_free_slots(user_id):
+    if dba.add_user_free_slots(_id=user_id, slots_list=request.json['slots']):
+        return dict(status=f'data was added')
+    else:
+        return dict(status=f'duplicate or internal error')
+
+# ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
+
+
+@app.route('/user/<int:user_id>/busy', methods=['GET'])
+def get_busy_slots_by_user_id(user_id):
+    # return dba.get_busy_slots_by_user_id(_id=user_id)
+    pass
+
+
+@app.route('/user/<int:user_id>/busy/add', methods=['POST'])
+def add_user_busy_slots(user_id):
+    # if dba.add_user_busy_slots(_id=user_id, slots_list=request.json['slots']):
+    #     return dict(status=f'data was added')
+    # else:
+    #     return dict(status=f'duplicate or internal error')
+    pass
+
+# ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
 @app.route('/user/<int:user_id>/types', methods=['GET'])
 def get_event_types_by_user_id(user_id):
-    return db.get_event_types_by_user_id(_id=user_id)
+    return dbe.get_event_types_by_user_id(_id=user_id)
 
 
 @app.route('/user/<int:user_id>/types/add', methods=['POST'])
 def add_user_event_types(user_id):
-    return db.add_types(_id=user_id, type_object=request.json['types'])
+    return dbe.add_types(_id=user_id, type_object=request.json['types'])
+
+# ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
 @app.route('/meeting/add', methods=['POST'])

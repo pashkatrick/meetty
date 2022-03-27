@@ -8,8 +8,8 @@ class TestUtiles():
 
     login = f'johndoe-{randint(0, 100)}'
     payload = {
-        "login": login,
-        "password": "1D1"
+        'login': login,
+        'password': '1D1'
     }
 
     def test_sign_in_with_no_user(self):
