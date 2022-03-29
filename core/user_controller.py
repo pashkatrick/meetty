@@ -28,7 +28,7 @@ class DBUserController(BaseClass):
 
     @db_session
     @exc_handler
-    def get_users(self, limit: int = 100, offset: int = 0):
+    def get_users(self, limit, offset):
         result = []
         for item in self._user.select()[offset:limit]:
             result.append(item.to_dict())

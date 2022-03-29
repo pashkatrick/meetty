@@ -20,7 +20,7 @@ class DBMeetingController(BaseClass):
 
     @db_session
     @exc_handler
-    def get_meetings(self, limit: int = 100, offset: int = 0):
+    def get_meetings(self, limit, offset):
         result = []
         for item in self._meeting.select()[offset:limit]:
             result.append(item.to_dict())
