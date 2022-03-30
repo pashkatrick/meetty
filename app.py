@@ -1,12 +1,13 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from core import event_controller, user_controller, meeting_controller, availability_controller
 from decouple import Config, RepositoryEnv
 from flasgger import Swagger, swag_from
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from flask_cors import CORS
+from flask_swagger import swagger
 
 app = Flask(__name__)
-swagger = Swagger(app)
+# swagger = Swagger(app)
 CORS(app)
 
 app.config["JWT_SECRET_KEY"] = 'super-secret'  # TODO: Change this!
@@ -20,6 +21,11 @@ dbe = event_controller.DBController(config=env_config)
 dbu = user_controller.DBUserController(config=env_config)
 dbm = meeting_controller.DBMeetingController(config=env_config)
 dba = availability_controller.DBTimeController(config=env_config)
+
+
+@app.route("/docs")
+def spec():
+    return jsonify(swagger(app))
 
 
 @app.route('/ready')
@@ -56,7 +62,7 @@ def login():
 
 
 @app.route('/users', methods=['GET'])
-@swag_from('swagger/get_users.yml')
+# @swag_from('swagger/get_users.yml')
 def get_users():
     _args = {**request.args}
     for key in _args:
@@ -66,7 +72,7 @@ def get_users():
 
 @app.route('/<username>', methods=['GET'])
 @app.route('/user/<username>', methods=['GET'])
-@swag_from('swagger/get_user.yml')
+# @swag_from('swagger/get_user.yml')
 def get_user_by_name(username, full=False):
     if request.args.get('full'):
         full = True
@@ -140,7 +146,7 @@ def add_meeting():
 
 
 @app.route('/meetings', methods=['GET'])
-@swag_from('swagger/meetings.yml')
+# @swag_from('swagger/meetings.yml')
 def get_meetings():
     _args = {**request.args}
     for key in _args:
