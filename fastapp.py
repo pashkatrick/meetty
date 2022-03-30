@@ -4,17 +4,7 @@ from decouple import Config, RepositoryEnv
 from core import event_controller, user_controller, meeting_controller, availability_controller
 from fastapi import FastAPI, Depends
 import uvicorn
-
-from pydantic import BaseModel
-
-
-class User(BaseModel):
-    login: str
-    password: str
-
-
-class Settings(BaseModel):
-    authjwt_secret_key: str = 'top-secret'
+from models.schemas import *
 
 
 app = FastAPI()
@@ -25,6 +15,7 @@ def get_config():
     return Settings()
 
 
+# TODO: fix that 'config'
 env = 'development'
 dbg = 'true'
 print(f'env: {env}, debug: {dbg}')
@@ -48,7 +39,7 @@ def index():
 
 
 @app.post('/auth/signup', tags=['auth'])
-def registration(req: User):
+def registration(req: Auth):
     user_login = req.login
     user_pass = req.password
     if dbu.sign_up(user_login, user_pass):
@@ -58,7 +49,7 @@ def registration(req: User):
 
 
 @app.post('/auth/signin', tags=['auth'])
-def login(req: User, Authorize: AuthJWT = Depends()):
+def login(req: Auth, Authorize: AuthJWT = Depends()):
     user_login = req.login
     user_pass = req.password
     if dbu.sign_in(user_login, user_pass):
@@ -102,12 +93,12 @@ def get_free_slots_by_user_id(user_id: int):
     return dba.get_free_slots_by_user_id(_id=user_id)
 
 
-# @app.post('/user/{user_id}/free/add', tags=['time slots'])
-# def add_user_free_slots(user_id: int, request: Request):
-#     if dba.add_user_free_slots(_id=user_id, slots_list=request.slots):
-#         return dict(status=f'data was added')
-#     else:
-#         return dict(status=f'duplicate or internal error')
+@app.post('/user/{user_id}/free/add', tags=['time slots'])
+def add_user_free_slots(user_id: int, req: SlotsList):
+    if dba.add_user_free_slots(_id=user_id, slots_list=req.dict()['slots']):
+        return dict(status=f'data was added')
+    else:
+        return dict(status=f'duplicate or internal error')
 
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
@@ -134,17 +125,21 @@ def get_event_types_by_user_id(user_id: int):
     return dbe.get_event_types_by_user_id(_id=user_id)
 
 
-# @app.post('/user/{user_id}/types/add', tags=['events'])
-# def add_user_event_types(user_id: int, request: Request):
-#     return dbe.add_types(_id=user_id, type_object=request.json()['types'])
-
+@app.post('/user/{user_id}/types/add', tags=['events'])
+def add_user_event_types(user_id: int, req: Type):
+    if dbe.add_types(_id=user_id, type_object=req.dict()):
+        return dict(status=f'data was added')
+    else:
+        return dict(status=f'duplicate or internal error')
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
-# @app.post('/meeting/add', tags=['events'])
-# def add_meeting(request: Request):
-#     meeting_object = request.json()['meeting']
-#     return dbm.add_meeding(meeting_object)
+@app.post('/meeting/add', tags=['events'])
+def add_meeting(req: Meeting):
+    if dbm.add_meeding(meeting_object=req.dict()):
+        return dict(status=f'data was added')
+    else:
+        return dict(status=f'duplicate or internal error')
 
 
 @app.get('/meetings', tags=['events'])

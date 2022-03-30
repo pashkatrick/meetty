@@ -1,7 +1,7 @@
 from pony.orm import db_session
 from faker import Faker
 from core.base import BaseClass
-from core.models import *
+from models.models import *
 import random
 import uuid
 

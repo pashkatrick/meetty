@@ -1,6 +1,6 @@
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler
-from core.models import *
+from models.models import *
 
 
 class DBMeetingController(BaseClass):
@@ -28,5 +28,5 @@ class DBMeetingController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_meeding(self, meeting_object):
+    def add_meeding(self, meeting_object: dict):
         return self._user(**meeting_object)

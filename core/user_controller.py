@@ -1,6 +1,6 @@
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler
-from core.models import *
+from models.models import *
 
 
 class DBUserController(BaseClass):

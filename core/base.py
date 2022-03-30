@@ -1,6 +1,6 @@
 from pony import orm
 
-from core.models import *
+from models.models import *
 
 
 class BaseClass(object):
