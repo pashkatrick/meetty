@@ -1,6 +1,6 @@
 from pony.orm import db_session
-from core.base import BaseClass
-from core.models import *
+from core.base import BaseClass, exc_handler
+from models.models import *
 
 
 class DBController(BaseClass):
@@ -12,33 +12,25 @@ class DBController(BaseClass):
     Event Types Methods
     '''
     @db_session
+    @exc_handler
     def get_event_types_by_user_id(self, _id):
-        try:
-            event_types = self._event_type.select(
-                lambda e: self._user[_id] in e.users
-            )
-            if event_types:
-                response = [item.to_dict() for item in event_types]
-            return dict(data=response)
-        except Exception as e:
-            print(f'error: {e}')
-            return False
+        event_types = self._event_type.select(
+            lambda e: self._user[_id] in e.users
+        )
+        if event_types:
+            response = [item.to_dict() for item in event_types]
+        return dict(data=response)
 
     @db_session
-    def add_types(self, _id, type_object):
-        try:
-            self._event_type(users=self._user[_id], **type_object)
-            return True
-        except Exception as e:
-            print(f'error: {e}')
-            return False
+    @exc_handler
+    def add_types(self, _id, type_object: dict):
+        # TODO: add duplicate check
+        # exist = self.get_event_types_by_user_id(_id)['data']
+        return self._event_type(users=self._user[_id], **type_object)
 
     @db_session
+    @exc_handler
     def update_types(self, update_id, update_data):
         usr = self._event_type[update_id]
-        try:
-            usr.set(**update_data)
-            return True
-        except Exception as e:
-            print(f'error: {e}')
-            return False
+        usr.set(**update_data)
+        return True
