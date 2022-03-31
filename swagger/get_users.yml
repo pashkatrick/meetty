@@ -1,7 +1,0 @@
-endpoint returning a list of all users
----
-tags:
-  - Users
-responses:
-  200:
-    description: a list of user objects   

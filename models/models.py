@@ -16,7 +16,8 @@ def user(db, orm):
         metadata = orm.Optional(str)
         hide_branding = orm.Optional(str)
         # sub models
-        availabilities = orm.Set('Availability')
+        free = orm.Set('Free')
+        busy = orm.Set('Busy')
         schedule = orm.Optional(str)
         # meetings = orm.Set('Meeting')
         event_types = orm.Set('EventType')
@@ -38,15 +39,24 @@ def event_type(db, orm, User):
     return EventType
 
 
-# TODO: rename
-def availability(db, orm, User):
-    class Availability(db.Entity):
+def free_at(db, orm, User):
+    class Free(db.Entity):
         _id = orm.PrimaryKey(int, auto=True, hidden=True)
         users = orm.Set(User)
         day = orm.Optional(int)
         time_from = orm.Optional(int)
         time_to = orm.Optional(int)
-    return Availability
+    return Free
+
+
+def busy_at(db, orm, User):
+    class Busy(db.Entity):
+        _id = orm.PrimaryKey(int, auto=True, hidden=True)
+        users = orm.Set(User)
+        day = orm.Optional(int)
+        time_from = orm.Optional(int)
+        time_to = orm.Optional(int)
+    return Busy
 
 
 def meeting(db, orm):
