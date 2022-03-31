@@ -2,7 +2,7 @@ import requests
 from config import host
 
 
-class TestMeetings:
+class TestEvents:
 
     def test_get_meeting(self):
         response = requests.get(f'{host}/meeting/3')

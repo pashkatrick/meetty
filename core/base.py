@@ -18,7 +18,8 @@ class BaseClass(object):
 
         self._user = user(*_conf)
         self._event_type = event_type(*_conf, self._user)
-        self._availability = availability(*_conf, self._user)
+        self._free_at = free_at(*_conf, self._user)
+        self._busy_at = busy_at(*_conf, self._user)
         self._meeting = meeting(*_conf)
         self.db.generate_mapping(create_tables=True)
 

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+# from datetime import datetime, timedelta
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler
 from models.models import *
@@ -15,7 +15,7 @@ class DBTimeController(BaseClass):
     @db_session
     @exc_handler
     def get_free_slots_by_user_id(self, _id):
-        slots = self._availability.select(
+        slots = self._free_at.select(
             lambda a: self._user[_id] in a.users
         )
         if slots:
@@ -32,7 +32,7 @@ class DBTimeController(BaseClass):
             exist.append(item)
         for slot_object in slots_list:
             if not slot_object in exist:
-                self._availability(users=self._user[_id], **slot_object)
+                self._free_at(users=self._user[_id], **slot_object)
                 return True
             else:
                 return False
@@ -40,7 +40,7 @@ class DBTimeController(BaseClass):
     @db_session
     @exc_handler
     def update_free_slots(self, update_id, update_data):
-        usr = self._availability[update_id]
+        usr = self._free_at[update_id]
         usr.set(**update_data)
         return True
 
@@ -50,7 +50,7 @@ class DBTimeController(BaseClass):
     @db_session
     @exc_handler
     def get_busy_slots_by_user_id(self, _id):
-        slots = self._availability.select(
+        slots = self._busy_at.select(
             lambda a: self._user[_id] in a.users
         )
         if slots:
@@ -59,14 +59,15 @@ class DBTimeController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_user_busy_slots(self, _id, slots_list) -> bool:
+    def add_user_busy_slots(self, _id, slots_list: list):
         exist = []
         for item in self.get_free_slots_by_user_id(_id)['data']:
             del item['_id']
+            # TODO: only one add, but second miss in list
             exist.append(item)
         for slot_object in slots_list:
             if not slot_object in exist:
-                self._availability(users=self._user[_id], **slot_object)
+                self._busy_at(users=self._user[_id], **slot_object)
                 return True
             else:
                 return False
@@ -74,6 +75,6 @@ class DBTimeController(BaseClass):
     @db_session
     @exc_handler
     def update_busy_slots(self, update_id, update_data):
-        usr = self._availability[update_id]
+        usr = self._busy_at[update_id]
         usr.set(**update_data)
         return True
