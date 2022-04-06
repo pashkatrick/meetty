@@ -23,7 +23,7 @@ and then
 docker run --rm -it -p 5000:5000 pashkatrick/calendario
 ```
 
-to open docs -> open localhost:5000/docs and wait for a swagger
+to open docs -> move to localhost:5000/docs and wait for a swagger
 
 <p align="left">
 <img width="600" alt="screenshot" src="https://user-images.githubusercontent.com/8003175/162046377-b6b69bda-8782-4ad1-aa21-3cfe9fdb8bf0.jpg">
