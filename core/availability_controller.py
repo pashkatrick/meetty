@@ -20,7 +20,7 @@ class DBTimeController(BaseClass):
         )
         if slots:
             response = [item.to_dict() for item in slots]
-        return dict(data=response)
+        return dict(free_slots=response)
 
     @db_session
     @exc_handler
@@ -55,7 +55,7 @@ class DBTimeController(BaseClass):
         )
         if slots:
             response = [item.to_dict() for item in slots]
-        return dict(data=response)
+        return dict(busy_slots=response)
 
     @db_session
     @exc_handler

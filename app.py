@@ -1,20 +1,32 @@
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from decouple import Config, RepositoryEnv
-from core import event_controller, user_controller, meeting_controller, availability_controller
+from core import event_controller, user_controller, meeting_controller, availability_controller, notification_controller
 from fastapi import FastAPI, Depends, Header
+from fastapi.security import HTTPBearer
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
 from models.schemas import *
 
-
 app = FastAPI()
 
+# TODO: config
 
-@AuthJWT.load_config
-def get_config():
-    return Settings()
+origins = [
+    'http://109.107.176.29',
+    'http://109.107.176.29:5000',
+    'http://localhost',
+    'http://localhost:5000',
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
 # TODO: fix that 'config'
 env = 'development'
@@ -25,15 +37,24 @@ dbe = event_controller.DBController(config=env_config)
 dbu = user_controller.DBUserController(config=env_config)
 dbm = meeting_controller.DBMeetingController(config=env_config)
 dba = availability_controller.DBTimeController(config=env_config)
+dbn = notification_controller.DBNotificationController(config=env_config)
+
+# need for docs auth button
+token_auth_scheme = HTTPBearer()
+
+
+@AuthJWT.load_config
+def get_config():
+    return Settings()
 
 
 @app.exception_handler(AuthJWTException)
 def authjwt_exception_handler(request, exc: AuthJWTException):
-    return JSONResponse(status_code=exc.status_code, content={"detail": exc.message})
+    return JSONResponse(status_code=exc.status_code, content={'detail': exc.message})
 
 
 @app.get('/ready')
-def ready(Authorize: AuthJWT = Depends(), access_token: str = Header(None)):
+def ready(Authorize: AuthJWT = Depends(), token=Depends(token_auth_scheme)):
     Authorize.jwt_required()
     current_user = Authorize.get_jwt_subject()
     return dict(status=f'ok, {current_user}')
@@ -125,13 +146,13 @@ def add_user_busy_slots(user_id: int, req: SlotsList):
 
 
 @app.get('/user/{user_id}/types', tags=['event types'])
-def get_event_types_by_user_id(user_id: int, Authorize: AuthJWT = Depends(), access_token: str = Header(None)):
+def get_event_types_by_user_id(user_id: int, Authorize: AuthJWT = Depends()):
     # Authorize.jwt_required()
     return dbe.get_event_types_by_user_id(_id=user_id)
 
 
 @app.post('/user/{user_id}/types/add', tags=['event types'])
-def add_user_event_types(user_id: int, req: Type, Authorize: AuthJWT = Depends(), access_token: str = Header(None)):
+def add_user_event_types(user_id: int, req: Type, Authorize: AuthJWT = Depends()):
     # Authorize.jwt_required()
     if dbe.add_types(_id=user_id, type_object=req.dict()):
         return dict(status=f'data was added')
@@ -156,7 +177,14 @@ def get_meetings(limit: int = 50, offset: int = 0):
 @app.get('/meeting/{meeting_id}', tags=['events'])
 def get_meeting(meeting_id: int):
     return dbm.get_meeting(_id=meeting_id)
+# # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+@app.post('/notify', tags=['notification'])
+def notify():
+    return dict(status=f'message was delivered')
+# # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, host='0.0.0.0', port=5000)

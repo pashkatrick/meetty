@@ -1,7 +1,7 @@
 def user(db, orm):
     class User(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
-        name = orm.Required(str)
+        name = orm.Optional(str)
         username = orm.Optional(str)
         avatar = orm.Optional(str)
         bio = orm.Optional(str)
@@ -12,6 +12,7 @@ def user(db, orm):
         time_zone = orm.Optional(str)
         strat_time = orm.Optional(str)
         theme = orm.Optional(str)
+        away = orm.Optional(bool, default=False)
         verified = orm.Optional(bool, default=False)
         metadata = orm.Optional(str)
         hide_branding = orm.Optional(str)
@@ -29,30 +30,38 @@ def user(db, orm):
 def event_type(db, orm, User):
     class EventType(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
-        title = orm.Required(str)
+        title = orm.Optional(str)
         users = orm.Set(User)
         # meeting = orm.Set('Meeting')
         slug = orm.Optional(str)
-        length = orm.Required(int)
+        length = orm.Optional(int)
         description = orm.Optional(str)
         default = orm.Optional(bool, default=True)
     return EventType
 
 
-def free_at(db, orm, User):
+def schedule(db, orm, User):
+    class Schedule(db.Entity):
+        _id = orm.PrimaryKey(int, auto=True, hidden=True)
+        name = orm.Optional(str)
+        users = orm.Set(User)
+    return Schedule
+
+
+def free_at(db, orm, Schedule):
     class Free(db.Entity):
         _id = orm.PrimaryKey(int, auto=True, hidden=True)
-        users = orm.Set(User)
+        schedule = orm.Set(Schedule)
         day = orm.Optional(int)
         time_from = orm.Optional(int)
         time_to = orm.Optional(int)
     return Free
 
 
-def busy_at(db, orm, User):
+def busy_at(db, orm, Schedule):
     class Busy(db.Entity):
         _id = orm.PrimaryKey(int, auto=True, hidden=True)
-        users = orm.Set(User)
+        schedule = orm.Set(Schedule)
         day = orm.Optional(int)
         time_from = orm.Optional(int)
         time_to = orm.Optional(int)
@@ -62,13 +71,13 @@ def busy_at(db, orm, User):
 def meeting(db, orm):
     class Meeting(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
-        uuid = orm.Required(str)
+        uuid = orm.Optional(str)
         agenda = orm.Optional(str)
         description = orm.Optional(str)
         title = orm.Optional(str)
-        user_id = orm.Required(int)
+        user_id = orm.Optional(int)
         offline = orm.Optional(bool, default=0)
-        type_id = orm.Required(int)
+        type_id = orm.Optional(int)
         time_from = orm.Optional(int)
         time_to = orm.Optional(int)
         status = orm.Optional(str)

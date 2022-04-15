@@ -133,6 +133,6 @@ dmypy.json
 *sqlite
 adminer/
 prod*
-*-compose*
 .DS_Store
 tests.sh
+*.ics

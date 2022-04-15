@@ -16,7 +16,7 @@ class DBMeetingController(BaseClass):
     @exc_handler
     def get_meeting(self, _id: int):
         mt = self._meeting[_id]
-        return dict(data=mt.to_dict())
+        return dict(meeting=mt.to_dict())
 
     @db_session
     @exc_handler
@@ -24,7 +24,7 @@ class DBMeetingController(BaseClass):
         result = []
         for item in self._meeting.select()[offset:limit]:
             result.append(item.to_dict())
-        return dict(data=result)
+        return dict(meetings=result)
 
     @db_session
     @exc_handler

@@ -19,7 +19,7 @@ class DBController(BaseClass):
         )
         if event_types:
             response = [item.to_dict() for item in event_types]
-        return dict(data=response)
+        return dict(event_types=response)
 
     @db_session
     @exc_handler
