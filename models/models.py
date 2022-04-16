@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 def user(db, orm):
     class User(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
@@ -19,7 +22,7 @@ def user(db, orm):
         # sub models
         free = orm.Set('Free')
         busy = orm.Set('Busy')
-        schedule = orm.Optional(str)
+        schedule = orm.Set('Schedule')
         # meetings = orm.Set('Meeting')
         event_types = orm.Set('EventType')
         credentials = orm.Optional(str)
@@ -43,25 +46,26 @@ def event_type(db, orm, User):
 def schedule(db, orm, User):
     class Schedule(db.Entity):
         _id = orm.PrimaryKey(int, auto=True, hidden=True)
-        name = orm.Optional(str)
+        title = orm.Optional(str)
         users = orm.Set(User)
     return Schedule
 
 
-def free_at(db, orm, Schedule):
+def free_at(db, orm, User):
     class Free(db.Entity):
         _id = orm.PrimaryKey(int, auto=True, hidden=True)
-        schedule = orm.Set(Schedule)
+        users = orm.Set(User)
         day = orm.Optional(int)
         time_from = orm.Optional(int)
         time_to = orm.Optional(int)
+        schedule_id = orm.Optional(int)
     return Free
 
 
-def busy_at(db, orm, Schedule):
+def busy_at(db, orm, User):
     class Busy(db.Entity):
         _id = orm.PrimaryKey(int, auto=True, hidden=True)
-        schedule = orm.Set(Schedule)
+        users = orm.Set(User)
         day = orm.Optional(int)
         time_from = orm.Optional(int)
         time_to = orm.Optional(int)

@@ -39,3 +39,7 @@ class Meeting(BaseModel):
     paid: bool
     type_id: int
     user_id: int
+
+
+class Schedule(BaseModel):
+    title: str
