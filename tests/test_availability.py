@@ -30,12 +30,12 @@ class TestAvailablity:
         assert len(response.json()['free_slots']) >= 3
 
     def test_add_free_time_frames(self):
-        response = requests.post(f'{host}/user/5/free/add', json=self.payload)
+        response = requests.post(f'{host}/user/6/free/add', json=self.payload)
         assert response.status_code == 200
         assert response.json()['status'] == 'data was added'
 
     def test_add_free_time_duplicates(self):
-        response = requests.post(f'{host}/user/5/free/add', json=self.payload)
+        response = requests.post(f'{host}/user/8/free/add', json=self.payload)
         assert response.status_code == 200
         assert response.json()['status'] == 'duplicate or internal error'
 

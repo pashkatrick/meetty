@@ -43,3 +43,8 @@ class Meeting(BaseModel):
 
 class Schedule(BaseModel):
     title: str
+
+
+class Notification(BaseModel):
+    chat_id: str
+    # message: str

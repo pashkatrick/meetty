@@ -2,7 +2,7 @@ from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from decouple import Config, RepositoryEnv
 from core import event_controller, user_controller, meeting_controller, availability_controller, notification_controller, schedule_controller
-from fastapi import FastAPI, Depends, Header
+from fastapi import FastAPI, Depends
 from fastapi.security import HTTPBearer
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -199,9 +199,28 @@ def get_meeting(meeting_id: int):
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
-@app.post('/notify', tags=['notification'])
-def notify():
-    return dict(status=f'message was delivered')
+@app.post('/notify/new', tags=['notification'])
+def notify(req: Notification):
+    if dbn.new_event(chat_id=req.dict()['chat_id']):
+        return dict(status=f'message was delivered')
+    else:
+        return dict(status=f'message was not delivered')
+
+
+@app.post('/notify/approve', tags=['notification'])
+def notify(req: Notification):
+    if dbn.approve_meeting(chat_id=req.dict()['chat_id']):
+        return dict(status=f'message was delivered')
+    else:
+        return dict(status=f'message was not delivered')
+
+
+@app.post('/notify/cancel', tags=['notification'])
+def notify(req: Notification):
+    if dbn.cancel_meeting(chat_id=req.dict()['chat_id']):
+        return dict(status=f'message was delivered')
+    else:
+        return dict(status=f'message was not delivered')
 
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 

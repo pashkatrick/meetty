@@ -25,7 +25,7 @@ class DBTimeController(BaseClass):
     @exc_handler
     def add_user_free_slots(self, _id, slots_list: list):
         exist = []
-        for item in self.get_free_slots_by_user_id(_id)['data']:
+        for item in self.get_free_slots_by_user_id(_id)['free_slots']:
             del item['_id']
             # TODO: only one add, but second miss in list
             exist.append(item)
@@ -60,7 +60,7 @@ class DBTimeController(BaseClass):
     @exc_handler
     def add_user_busy_slots(self, _id, slots_list: list):
         exist = []
-        for item in self.get_free_slots_by_user_id(_id)['data']:
+        for item in self.get_busy_slots_by_user_id(_id)['busy_slots']:
             del item['_id']
             # TODO: only one add, but second miss in list
             exist.append(item)

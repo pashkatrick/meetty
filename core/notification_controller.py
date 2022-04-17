@@ -1,6 +1,7 @@
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler
 from models.models import *
+import requests
 
 
 class DBNotificationController(BaseClass):
@@ -8,35 +9,42 @@ class DBNotificationController(BaseClass):
     def __init__(self, config):
         BaseClass.__init__(self, config)
 
+    host = 'https://n8n.pshktrck.ru/webhook/36e771a5-162c-4f96-8d23-bee10432dfb9'
+    payload_new = {
+        'telegram_chat_id': '',
+        'text': 'Hi there!\nyou have new event. Check, please!'
+    }
+
+    payload_approve = {
+        'telegram_chat_id': '',
+        'text': 'Hi there!\nyour meeting was approved by other side. Welcome!'
+    }
+
+    payload_cancel = {
+        'telegram_chat_id': '',
+        'text': 'Hi there!\nyour meeting was canceled by other side. Sorry!'
+    }
+
     '''
     Notification Methods
     '''
+    @db_session
+    @exc_handler
+    def new_event(self, chat_id):
+        body = self.payload_new
+        body['telegram_chat_id'] = chat_id
+        return requests.post(self.host, json=body)
 
     @db_session
     @exc_handler
-    def cancel_meeting(self, meeting_object: dict):
-        pass
+    def cancel_meeting(self, chat_id):
+        body = self.payload_cancel
+        body['telegram_chat_id'] = chat_id
+        return requests.post(self.host, json=body)
 
     @db_session
     @exc_handler
-    def approve_meeting(self, meeting_object: dict):
-        pass
-
-    # @db_session
-    # @exc_handler
-    # def get_meeting(self, _id: int):
-    #     mt = self._meeting[_id]
-    #     return dict(meeting=mt.to_dict())
-
-    # @db_session
-    # @exc_handler
-    # def get_meetings(self, limit, offset):
-    #     result = []
-    #     for item in self._meeting.select()[offset:limit]:
-    #         result.append(item.to_dict())
-    #     return dict(meetings=result)
-
-    # @db_session
-    # @exc_handler
-    # def add_meeding(self, meeting_object: dict):
-    #     return self._user(**meeting_object)
+    def approve_meeting(self, chat_id):
+        body = self.payload_approve
+        body['telegram_chat_id'] = chat_id
+        return requests.post(self.host, json=body)
