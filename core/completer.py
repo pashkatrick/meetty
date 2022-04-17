@@ -76,20 +76,38 @@ class DBCompleter(BaseClass):
                     users=self._user[i],
                     day=0,
                     time_from=540,
-                    time_to=1020
+                    time_to=1020,
+                    schedule_id=i
                 ),
                 self._free_at(
                     users=self._user[i],
                     day=1,
                     time_from=540,
-                    time_to=600
+                    time_to=600,
+                    schedule_id=i
                 ),
                 self._free_at(
                     users=self._user[i],
                     day=3,
                     time_from=630,
                     time_to=1020
-                )                                    
+                )
             except Exception as e:
                 return print(f'error: {e}')
         print('----------------  availabilities added  ----------------')
+
+    @db_session
+    def add_schedules(self):
+        for i in range(1, 10):
+            try:
+                self._schedule(
+                    users=self._user[i],
+                    title='default'
+                ),
+                self._schedule(
+                    users=self._user[i],
+                    title='short week'
+                )
+            except Exception as e:
+                return print(f'error: {e}')
+        print('----------------  schedules added  ----------------')

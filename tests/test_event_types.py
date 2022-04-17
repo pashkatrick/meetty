@@ -14,7 +14,7 @@ class TestEventTypes:
 
     def test_get_event_types(self):
         response = requests.get(f'{host}/user/2/types')
-        data = response.json()['data']
+        data = response.json()['event_types']
         assert response.status_code == 200
         assert len(data) > 0
         assert data[0]['title']

@@ -17,14 +17,14 @@ class DBUserController(BaseClass):
     def get_user_by_id(self, _id: int, full: bool):
         usr = self._user[_id]
         response = usr.to_dict() if full else f'{usr.name}'
-        return dict(data=response)
+        return dict(user=response)
 
     @db_session
     @exc_handler
     def get_user_by_name(self, _username: str, full: bool):
         usr = self._user.get(username=_username)
         response = usr.to_dict() if full else f'{usr.name}'
-        return dict(data=response)
+        return dict(user=response)
 
     @db_session
     @exc_handler
@@ -32,7 +32,7 @@ class DBUserController(BaseClass):
         result = []
         for item in self._user.select()[offset:limit]:
             result.append(item.to_dict())
-        return dict(data=result)
+        return dict(users=result)
 
     @db_session
     @exc_handler

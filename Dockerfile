@@ -5,5 +5,5 @@ RUN pip install pip --upgrade
 RUN pip install -U -r requirements.txt
 RUN python3 bootstrap.py
 EXPOSE 5000
-CMD [ "python", "fastapp.py" ]
+CMD [ "python", "app.py" ]
 

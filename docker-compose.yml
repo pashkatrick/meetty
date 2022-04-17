@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - 5000:5000
+    depends_on:
+      - dbPostgres
+
+  dbPostgres:
+    image: postgres:10
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${PSQL_ROOT_USER}
+      POSTGRES_PASSWORD: ${PSQL_ROOT_PASS}
+      POSTGRES_DB: ${PSQL_DB}
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - "./adminer/adminer.css:/var/www/html/adminer.css"
+    depends_on:
+      - dbPostgres
