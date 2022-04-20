@@ -179,28 +179,28 @@ def add_user_event_types(user_id: int, req: Type, Authorize: AuthJWT = Depends()
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
-@app.post('/meeting/add', tags=['events'])
-def add_meeting(req: Meeting):
-    if dbm.add_meeding(meeting_object=req.dict()):
+@app.post('/meeting/{user_id}/add', tags=['events'])
+def add_meeting(user_id: int, req: Meeting):
+    if dbm.add_meeting(_id=user_id, meeting_object=req.dict()):
         return dict(status=f'data was added')
     else:
         return dict(status=f'duplicate or internal error')
 
 
-@app.get('/meetings', tags=['events'])
-def get_meetings(limit: int = 50, offset: int = 0):
-    return dbm.get_meetings(limit, offset)
+@app.get('/meeting/{user_id}/all', tags=['events'])
+def get_meetings(user_id: int, limit: int = 50, offset: int = 0):
+    return dbm.get_meetings(user_id, limit, offset)
 
 
-@app.get('/meeting/{meeting_id}', tags=['events'])
-def get_meeting(meeting_id: int):
-    return dbm.get_meeting(_id=meeting_id)
+@app.get('/meeting/{user_id}/{meeting_id}', tags=['events'])
+def get_meeting(user_id: int, meeting_id: int):
+    return dbm.get_meeting(_id=meeting_id, user_id=user_id)
 
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
 @app.post('/notify/new', tags=['notification'])
-def notify(req: Notification):
+def notify_new(req: Notification):
     if dbn.new_event(chat_id=req.dict()['chat_id']):
         return dict(status=f'message was delivered')
     else:
@@ -208,7 +208,7 @@ def notify(req: Notification):
 
 
 @app.post('/notify/approve', tags=['notification'])
-def notify(req: Notification):
+def notify_approve(req: Notification):
     if dbn.approve_meeting(chat_id=req.dict()['chat_id']):
         return dict(status=f'message was delivered')
     else:
@@ -216,7 +216,7 @@ def notify(req: Notification):
 
 
 @app.post('/notify/cancel', tags=['notification'])
-def notify(req: Notification):
+def notify_cancel(req: Notification):
     if dbn.cancel_meeting(chat_id=req.dict()['chat_id']):
         return dict(status=f'message was delivered')
     else:

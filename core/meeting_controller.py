@@ -14,19 +14,24 @@ class DBMeetingController(BaseClass):
 
     @db_session
     @exc_handler
-    def get_meeting(self, _id: int):
-        mt = self._meeting[_id]
-        return dict(meeting=mt.to_dict())
+    def get_meeting(self, _id: int, user_id: int):
+        meeting = list(self._meeting.select(
+            lambda m: self._user[user_id]._id == m.user_id and m._id == _id
+        ))[0]
+        if meeting:
+            return dict(meeting=meeting.to_dict())
 
     @db_session
     @exc_handler
-    def get_meetings(self, limit, offset):
-        result = []
-        for item in self._meeting.select()[offset:limit]:
-            result.append(item.to_dict())
-        return dict(meetings=result)
+    def get_meetings(self, _id, limit, offset):
+        meetings = self._meeting.select(
+            lambda m: self._user[_id]._id == m.user_id
+        )[offset:limit]
+        if meetings:
+            response = [item.to_dict() for item in meetings]
+        return dict(meetings=response)
 
     @db_session
     @exc_handler
-    def add_meeding(self, meeting_object: dict):
-        return self._user(**meeting_object)
+    def add_meeting(self, _id: int, meeting_object: dict):
+        return self._meeting(user_id=self._user[_id]._id, **meeting_object)
