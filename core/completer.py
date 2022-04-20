@@ -32,10 +32,10 @@ class DBCompleter(BaseClass):
     def add_meetings(self):
         for i in range(10):
             fake_data = dict(
+                title=f'{i*3}0 minute meeting',
                 uuid=str(uuid.uuid4()),
                 agenda=self.fake.paragraph(nb_sentences=1),
                 description=self.fake.paragraph(nb_sentences=1),
-                title=f'{i*3}0 minute meeting',
                 user_id=i,
                 type_id=i,
                 status='accepted'

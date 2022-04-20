@@ -38,7 +38,6 @@ class Meeting(BaseModel):
     offline: bool
     paid: bool
     type_id: int
-    user_id: int
 
 
 class Schedule(BaseModel):
