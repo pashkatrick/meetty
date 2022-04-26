@@ -136,3 +136,4 @@ prod*
 .DS_Store
 tests.sh
 *.ics
+*.sh
