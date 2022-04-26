@@ -30,16 +30,10 @@ class DBMeetingController(BaseClass):
 
     @db_session
     @exc_handler
-    def get_meetings(self, _id, limit, offset, status):
-        status_value = self.status_map[status]
-        if status_value:
-            meetings = self._meeting.select(
-                lambda m: self._user[_id]._id == m.user_id and m.status == status_value
-            )[offset:limit]
-        else: 
-            meetings = self._meeting.select(
-                lambda m: self._user[_id]._id == m.user_id
-            )[offset:limit]            
+    def get_meetings(self, _id, limit, offset):
+        meetings = self._meeting.select(
+            lambda m: self._user[_id]._id == m.user_id
+        )[offset:limit]
         if meetings:
             response = [item.to_dict() for item in meetings]
         return dict(meetings=response)
