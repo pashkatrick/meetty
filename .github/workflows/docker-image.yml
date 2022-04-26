@@ -17,6 +17,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build the Docker image
-        run: docker build . -f Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/calendario:${{ github.ref_name }}
+        run: docker build . -f Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/calendario:${GITHUB_REF##*/}
       - name: Push the Docker image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/calendario:${{ github.ref_name }}
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/calendario:${GITHUB_REF##*/}
