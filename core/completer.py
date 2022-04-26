@@ -1,8 +1,10 @@
+import email
 from pony.orm import db_session
 from faker import Faker
 from core.base import BaseClass
 from models.models import *
 import random
+from random import randint
 import uuid
 
 
@@ -38,7 +40,13 @@ class DBCompleter(BaseClass):
                 description=self.fake.paragraph(nb_sentences=1),
                 user_id=i,
                 type_id=i,
-                status='accepted'
+                recepient_name=self.fake.name(),
+                recepient_email=self.fake.email(),
+                year=2022,
+                month=i+2,
+                day=i+10,
+                weekday=randint(0, 7),
+                status=randint(1, 3)
             )
             try:
                 self._meeting(**fake_data)

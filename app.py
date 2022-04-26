@@ -18,6 +18,7 @@ origins = [
     'http://109.107.176.29:5000',
     'http://localhost',
     'http://localhost:5000',
+    'http://localhost:3000'
 ]
 
 app.add_middleware(
@@ -188,8 +189,8 @@ def add_meeting(user_id: int, req: Meeting):
 
 
 @app.get('/meeting/{user_id}/all', tags=['events'])
-def get_meetings(user_id: int, limit: int = 50, offset: int = 0):
-    return dbm.get_meetings(user_id, limit, offset)
+def get_meetings(user_id: int, limit: int = 50, offset: int = 0, status = None):
+    return dbm.get_meetings(user_id, limit, offset, status)
 
 
 @app.get('/meeting/{user_id}/{meeting_id}', tags=['events'])

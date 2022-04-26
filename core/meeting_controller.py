@@ -1,3 +1,4 @@
+from os import stat, stat_result
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler
 from models.models import *
@@ -12,6 +13,12 @@ class DBMeetingController(BaseClass):
     Meeting Methods
     '''
 
+    status_map = {
+        'upcoming': 1,
+        'past': 2,
+        'canceled': 3
+    }
+
     @db_session
     @exc_handler
     def get_meeting(self, _id: int, user_id: int):
@@ -23,10 +30,16 @@ class DBMeetingController(BaseClass):
 
     @db_session
     @exc_handler
-    def get_meetings(self, _id, limit, offset):
-        meetings = self._meeting.select(
-            lambda m: self._user[_id]._id == m.user_id
-        )[offset:limit]
+    def get_meetings(self, _id, limit, offset, status):
+        status_value = self.status_map[status]
+        if status_value:
+            meetings = self._meeting.select(
+                lambda m: self._user[_id]._id == m.user_id and m.status == status_value
+            )[offset:limit]
+        else: 
+            meetings = self._meeting.select(
+                lambda m: self._user[_id]._id == m.user_id
+            )[offset:limit]            
         if meetings:
             response = [item.to_dict() for item in meetings]
         return dict(meetings=response)
