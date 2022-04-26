@@ -1,3 +1,4 @@
+from calendar import weekday
 from typing import Optional
 
 
@@ -82,9 +83,15 @@ def meeting(db, orm):
         user_id = orm.Optional(int)
         offline = orm.Optional(bool, default=0)
         type_id = orm.Optional(int)
+        recepient_name = orm.Optional(str)
+        recepient_email = orm.Optional(str)
         start_time = orm.Optional(int)
         end_time = orm.Optional(int)
-        status = orm.Optional(str)
+        year = orm.Optional(int)
+        month = orm.Optional(int)
+        day = orm.Optional(int)
+        weekday = orm.Optional(int)
+        status = orm.Optional(int)
         confirmed = orm.Optional(bool)
         rejected = orm.Optional(bool)
         paid = orm.Optional(bool)

@@ -1,3 +1,4 @@
+from os import stat, stat_result
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler
 from models.models import *
@@ -11,6 +12,12 @@ class DBMeetingController(BaseClass):
     '''
     Meeting Methods
     '''
+
+    status_map = {
+        'upcoming': 1,
+        'past': 2,
+        'canceled': 3
+    }
 
     @db_session
     @exc_handler
