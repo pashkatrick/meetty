@@ -33,11 +33,21 @@ class Meeting(BaseModel):
     title: str
     agenda: str
     description: str
+    offline: bool
+    type_id: int
+    recepient_name: str
+    recepient_email: str
     start_time: int
     end_time: int
-    offline: bool
+    year: int
+    month: int
+    day: int
+    weekday: int
+    status: int
+    confirmed: bool
+    rejected: bool
     paid: bool
-    type_id: int
+    provider: str
 
 
 class Schedule(BaseModel):
