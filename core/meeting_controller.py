@@ -42,3 +42,11 @@ class DBMeetingController(BaseClass):
     @exc_handler
     def add_meeting(self, _id: int, meeting_object: dict):
         return self._meeting(user_id=self._user[_id]._id, **meeting_object)
+
+
+    @db_session
+    @exc_handler
+    def update_meeting(self, _id, update_data):
+        filtered_data = {k: v for k, v in update_data.items() if v is not None}
+        self._meeting[_id].set(**filtered_data)
+        return self._meeting[_id]

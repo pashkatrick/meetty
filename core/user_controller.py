@@ -41,9 +41,10 @@ class DBUserController(BaseClass):
 
     @db_session
     @exc_handler
-    def update_user(self, update_id, update_data):
-        usr = self._user[update_id]
-        return usr.set(**update_data)
+    def update_user(self, _id, update_data):
+        filtered_data = {k: v for k, v in update_data.items() if v is not None}
+        self._user[_id].set(**filtered_data)
+        return self._user[_id]
 
     @db_session
     @exc_handler

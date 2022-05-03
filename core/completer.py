@@ -100,6 +100,24 @@ class DBCompleter(BaseClass):
                     time_from=630,
                     time_to=1020
                 )
+                self._busy_at(
+                    users=self._user[i],
+                    day=0,
+                    time_from=540,
+                    time_to=1020,
+                ),
+                self._busy_at(
+                    users=self._user[i],
+                    day=1,
+                    time_from=540,
+                    time_to=600,
+                ),
+                self._busy_at(
+                    users=self._user[i],
+                    day=3,
+                    time_from=630,
+                    time_to=1020
+                )
             except Exception as e:
                 return print(f'error: {e}')
         print('----------------  availabilities added  ----------------')
