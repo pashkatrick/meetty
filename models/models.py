@@ -1,4 +1,5 @@
 from calendar import weekday
+from email.policy import default
 from typing import Optional
 
 
@@ -19,7 +20,7 @@ def user(db, orm):
         away = orm.Optional(bool, default=False)
         verified = orm.Optional(bool, default=False)
         metadata = orm.Optional(str)
-        hide_branding = orm.Optional(str)
+        hide_branding = orm.Optional(bool, default=False)
         # sub models
         free = orm.Set('Free')
         busy = orm.Set('Busy')

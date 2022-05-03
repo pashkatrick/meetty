@@ -17,8 +17,7 @@ class DBTimeController(BaseClass):
         slots = self._free_at.select(
             lambda a: self._user[_id] in a.users
         )
-        if slots:
-            response = [item.to_dict() for item in slots]
+        response = [item.to_dict() for item in slots]
         return dict(free_slots=response)
 
     @db_session
@@ -50,8 +49,7 @@ class DBTimeController(BaseClass):
         slots = self._busy_at.select(
             lambda a: self._user[_id] in a.users
         )
-        if slots:
-            response = [item.to_dict() for item in slots]
+        response = [item.to_dict() for item in slots]
         return dict(busy_slots=response)
 
     @db_session

@@ -108,11 +108,12 @@ def get_user_by_id(user_id: int, full: bool = False):
     return dbu.get_user_by_id(_id=user_id, full=full)
 
 
-# @app.put('/user/update', tags=['users'])
-# def update_user(request: Request):
-#     upd_id = request.json()['id']
-#     upd_object = request.json()['update']
-#     return dbu.update_user(upd_id, upd_object)
+@app.put('/user/{user_id}/update', tags=['users'])
+def update_user(user_id: int, req: User):
+    if dbu.update_user(user_id, req.dict()):
+        return dict(status=f'user was updated')
+    else:
+        return dict(status=f'internal error')
 
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
@@ -196,6 +197,14 @@ def get_meetings(user_id: int, limit: int = 50, offset: int = 0):
 @app.get('/meeting/{user_id}/{meeting_id}', tags=['events'])
 def get_meeting(user_id: int, meeting_id: int):
     return dbm.get_meeting(_id=meeting_id, user_id=user_id)
+
+
+@app.put('/meeting/{meeting_id}/update', tags=['events'])
+def update_meeting(meeting_id: int, req: Meeting):
+    if dbm.update_meeting(meeting_id, req.dict()):
+        return dict(status=f'meeting was updated')
+    else:
+        return dict(status=f'internal error')
 
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
