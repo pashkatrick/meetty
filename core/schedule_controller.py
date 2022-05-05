@@ -35,9 +35,7 @@ class DBScheduleController(BaseClass):
     def add_schedule(self, _id, title):
         return self._schedule(title=title, users=self._user[_id])
 
-    # @db_session
-    # @exc_handler
-    # def update_schedule(self, update_id, update_data):
-    #     usr = self._free_at[update_id]
-    #     usr.set(**update_data)
-    #     return True
+    @db_session
+    @exc_handler
+    def delete_schedule(self, _id):
+        return self._schedule[_id].delete()

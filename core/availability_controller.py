@@ -35,10 +35,15 @@ class DBTimeController(BaseClass):
 
     @db_session
     @exc_handler
-    def update_free_slots(self, update_id, update_data):
-        usr = self._free_at[update_id]
-        usr.set(**update_data)
-        return True
+    def update_free_slot(self, _id, update_data):
+        filtered_data = {k: v for k, v in update_data.items() if v is not None}
+        self._free_at[_id].set(**filtered_data)
+        return self._free_at[_id]
+
+    @db_session
+    @exc_handler
+    def delete_time_slot(self, _id):
+        return self._free_at[_id].delete()
 
     '''
     Busy Time Methods

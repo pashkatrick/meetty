@@ -131,6 +131,14 @@ def add_schedule(user_id: int, req: Schedule):
         return dict(status=f'duplicate or internal error')
 
 
+@app.delete('/schedule/{schedule_id}/delete', tags=['schedule'])
+def add_schedule(schedule_id: int):
+    if dbs.delete_schedule(_id=schedule_id):
+        return dict(status=f'schedule was deleted')
+    else:
+        return dict(status=f'internal error')
+
+
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
 
@@ -145,6 +153,22 @@ def add_user_free_slots(user_id: int, req: SlotsList):
         return dict(status=f'data was added')
     else:
         return dict(status=f'duplicate or internal error')
+
+
+@app.put('/slot/{slot_id}/update', tags=['time slots'])
+def update_free_slot(slot_id: int, req: Slots):
+    if dba.update_free_slot(slot_id, req.dict()):
+        return dict(status=f'free slot was updated')
+    else:
+        return dict(status=f'internal error')
+
+
+@app.delete('/slot/{slot_id}/delete', tags=['time slots'])
+def update_free_slot(slot_id: int):
+    if dba.delete_time_slot(slot_id):
+        return dict(status=f'free slot was deleted')
+    else:
+        return dict(status=f'internal error')
 
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 
