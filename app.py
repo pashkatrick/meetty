@@ -132,12 +132,19 @@ def add_schedule(user_id: int, req: Schedule):
 
 
 @app.delete('/schedule/{schedule_id}/delete', tags=['schedule'])
-def add_schedule(schedule_id: int):
+def delete_schedule(schedule_id: int):
     if dbs.delete_schedule(_id=schedule_id):
         return dict(status=f'schedule was deleted')
     else:
         return dict(status=f'internal error')
 
+
+@app.put('/schedule/{schedule_id}/update', tags=['schedule'])
+def update_schedule(schedule_id: int, req: User):
+    if dbs.update_schedule(schedule_id, req.dict()):
+        return dict(status=f'schedule was updated')
+    else:
+        return dict(status=f'internal error')
 
 # # ----- # ----- # ----- # ----- # ----- # ----- # ----- # -----
 

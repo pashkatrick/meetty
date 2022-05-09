@@ -39,3 +39,10 @@ class DBScheduleController(BaseClass):
     @exc_handler
     def delete_schedule(self, _id):
         return self._schedule[_id].delete()
+
+    @db_session
+    @exc_handler
+    def update_schedule(self, _id, update_data):
+        filtered_data = {k: v for k, v in update_data.items() if v is not None}
+        self._schedule[_id].set(**filtered_data)
+        return self._schedule[_id]
