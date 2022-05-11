@@ -5,8 +5,7 @@ from fastapi.responses import JSONResponse
 from core import user_controller
 from decouple import Config, RepositoryEnv
 from models.schemes import User, Auth
-
-import base64
+from core.base import condition_response
 
 # TODO: fix that 'config'
 env = 'development'
@@ -67,19 +66,18 @@ def update_user(user_id: int, req: User):
 
 
 @router.post('/user/{user_id}/avatar/upload', tags=['avatar'])
-# TODO: update to save to db
-async def upload_avatar(file: UploadFile = File(...)):
-    with open(file.filename, 'wb') as image:
+async def upload_avatar(user_id: int, file: UploadFile = File(...)):
+    file_name = file.filename
+    # TODO: hardcode /avatar remove
+    with open(f'./avatars/{file_name}', 'wb') as image:
         content = await file.read()
         image.write(content)
-
-        # bin_str = base64.b64encode(content)
-        # print(bin_str)
-
         image.close()
-    return JSONResponse(content={'filename': file.filename}, status_code=200)
+    # print(dict(content={'filename': file_name}, status_code=200))
+    return condition_response(dbu.upload_avatar(user_id, file_name))
 
 
 @router.get('/user/{user_id}/avatar', tags=['avatar'])
-def get_user_avatar(user_id: int, req: Request):
-    return dict(url=f'{req.url._url}')
+def get_user_avatar(user_id: int):
+    # TODO: hardcode /avatar remove
+    return dict(path=f'/avatars/{dbu.get_avatar(user_id)}')

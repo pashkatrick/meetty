@@ -68,4 +68,10 @@ class DBUserController(BaseClass):
     @db_session
     @exc_handler
     def upload_avatar(self, _id, file_path):
-        pass
+        self._user[_id].avatar = file_path
+        return self._user[_id]
+
+    @db_session
+    @exc_handler
+    def get_avatar(self, _id):
+        return self._user[_id].avatar
