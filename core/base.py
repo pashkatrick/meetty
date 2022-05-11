@@ -33,3 +33,17 @@ def exc_handler(func):
             print(f'error in method {func.__name__}: {e}')
             return False
     return wrapper
+
+
+def condition_response(func):
+    if func:
+        return dict(status=f'successful request')
+    else:
+        return dict(status=f'internal error')
+
+
+def mssg_response(func):
+    if func:
+        return dict(status=f'message was delivered')
+    else:
+        return dict(status=f'message was not delivered')

@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from core import schedule_controller
 from decouple import Config, RepositoryEnv
 from models.schemes import Schedule
+from core.base import condition_response
 
 # TODO: fix that 'config'
 env = 'development'
@@ -19,23 +20,14 @@ def get_schedules(user_id: int):
 
 @router.post('/user/{user_id}/schedules', tags=['schedule'])
 def add_schedule(user_id: int, req: Schedule):
-    if dbs.add_schedule(_id=user_id, title=req.dict()['title']):
-        return dict(status=f'schedule was added')
-    else:
-        return dict(status=f'duplicate or internal error')
+    return condition_response(dbs.add_schedule(_id=user_id, title=req.dict()['title']))
 
 
 @router.delete('/schedule/{schedule_id}/delete', tags=['schedule'])
 def delete_schedule(schedule_id: int):
-    if dbs.delete_schedule(_id=schedule_id):
-        return dict(status=f'schedule was deleted')
-    else:
-        return dict(status=f'internal error')
+    return condition_response(dbs.delete_schedule(_id=schedule_id))
 
 
 @router.put('/schedule/{schedule_id}/update', tags=['schedule'])
 def update_schedule(schedule_id: int, req: Schedule):
-    if dbs.update_schedule(schedule_id, req.dict()):
-        return dict(status=f'schedule was updated')
-    else:
-        return dict(status=f'internal error')
+    return condition_response(dbs.update_schedule(schedule_id, req.dict()))

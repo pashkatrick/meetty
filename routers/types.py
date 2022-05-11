@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from core import event_controller
 from decouple import Config, RepositoryEnv
 from models.schemes import Type, Settings
+from core.base import condition_response
 
 # TODO: fix that 'config'
 env = 'development'
@@ -35,7 +36,4 @@ def get_event_types_by_user_id(user_id: int):
 @router.post('/user/{user_id}/types/add', tags=['event types'])
 def add_user_event_types(user_id: int, req: Type):
     # Authorize.jwt_required()
-    if dbe.add_types(_id=user_id, type_object=req.dict()):
-        return dict(status=f'data was added')
-    else:
-        return dict(status=f'duplicate or internal error')
+    return condition_response(dbe.add_types(_id=user_id, type_object=req.dict()))

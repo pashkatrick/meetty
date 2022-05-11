@@ -26,8 +26,7 @@ class DBScheduleController(BaseClass):
         schedules = self._schedule.select(
             lambda a: self._user[_id] in a.users
         )
-        if schedules:
-            response = [self._add_free_slots(item) for item in schedules]
+        response = [self._add_free_slots(item) for item in schedules]
         return dict(schedules=response)
 
     @db_session

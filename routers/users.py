@@ -1,10 +1,12 @@
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, File, UploadFile, Request
 from fastapi.responses import JSONResponse
 from core import user_controller
 from decouple import Config, RepositoryEnv
 from models.schemes import User, Auth
+
+import base64
 
 # TODO: fix that 'config'
 env = 'development'
@@ -62,3 +64,22 @@ def update_user(user_id: int, req: User):
         return dict(status=f'user was updated')
     else:
         return dict(status=f'internal error')
+
+
+@router.post('/user/{user_id}/avatar/upload', tags=['avatar'])
+# TODO: update to save to db
+async def upload_avatar(file: UploadFile = File(...)):
+    with open(file.filename, 'wb') as image:
+        content = await file.read()
+        image.write(content)
+
+        # bin_str = base64.b64encode(content)
+        # print(bin_str)
+
+        image.close()
+    return JSONResponse(content={'filename': file.filename}, status_code=200)
+
+
+@router.get('/user/{user_id}/avatar', tags=['avatar'])
+def get_user_avatar(user_id: int, req: Request):
+    return dict(url=f'{req.url._url}')

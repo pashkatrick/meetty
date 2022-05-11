@@ -20,4 +20,4 @@ class TestSchedules:
     def test_add_schedules(self):
         response = requests.post(f'{host}/user/2/schedules', json=self.payload)
         assert response.status_code == 200
-        assert response.json()['status'] == 'schedule was added'
+        assert response.json()['status'] == 'successful request'

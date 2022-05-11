@@ -17,8 +17,7 @@ class DBController(BaseClass):
         event_types = self._event_type.select(
             lambda e: self._user[_id] in e.users
         )
-        if event_types:
-            response = [item.to_dict() for item in event_types]
+        response = [item.to_dict() for item in event_types]
         return dict(event_types=response)
 
     @db_session

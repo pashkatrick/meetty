@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from core import meeting_controller
 from decouple import Config, RepositoryEnv
 from models.schemes import Meeting
+from core.base import condition_response
 
 # TODO: fix that 'config'
 env = 'development'
@@ -29,7 +30,4 @@ def get_meeting(user_id: int, meeting_id: int):
 
 @router.put('/meeting/{meeting_id}/update', tags=['events'])
 def update_meeting(meeting_id: int, req: Meeting):
-    if dbm.update_meeting(meeting_id, req.dict()):
-        return dict(status=f'meeting was updated')
-    else:
-        return dict(status=f'internal error')
+    return condition_response(dbm.update_meeting(meeting_id, req.dict()))

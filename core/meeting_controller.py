@@ -34,8 +34,7 @@ class DBMeetingController(BaseClass):
         meetings = self._meeting.select(
             lambda m: self._user[_id]._id == m.user_id
         )[offset:limit]
-        if meetings:
-            response = [item.to_dict() for item in meetings]
+        response = [item.to_dict() for item in meetings]
         return dict(meetings=response)
 
     @db_session
@@ -43,10 +42,8 @@ class DBMeetingController(BaseClass):
     def add_meeting(self, _id: int, meeting_object: dict):
         return self._meeting(user_id=self._user[_id]._id, **meeting_object)
 
-
     @db_session
     @exc_handler
     def update_meeting(self, _id, update_data):
         filtered_data = {k: v for k, v in update_data.items() if v is not None}
         self._meeting[_id].set(**filtered_data)
-        return self._meeting[_id]

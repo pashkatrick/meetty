@@ -23,4 +23,4 @@ class TestEventTypes:
     def test_add_event_types(self):
         response = requests.post(f'{host}/user/2/types/add', json=self.payload)
         assert response.status_code == 200
-        assert response.json()['status'] == 'data was added'
+        assert response.json()['status'] == 'successful request'

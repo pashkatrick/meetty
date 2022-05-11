@@ -64,3 +64,8 @@ class DBUserController(BaseClass):
     @exc_handler
     def is_user_exist(self, _login: str):
         return self._user.select(lambda u: u.username == _login).first()
+
+    @db_session
+    @exc_handler
+    def upload_avatar(self, _id, file_path):
+        pass
