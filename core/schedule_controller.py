@@ -5,8 +5,8 @@ from models.models import *
 
 class DBScheduleController(BaseClass):
 
-    def __init__(self, config):
-        BaseClass.__init__(self, config)
+    def __init__(self):
+        BaseClass.__init__(self)
 
     def _add_free_slots(self, _item):
         slots = self._free_at.select(

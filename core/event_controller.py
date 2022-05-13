@@ -5,8 +5,8 @@ from models.models import *
 
 class DBController(BaseClass):
 
-    def __init__(self, config):
-        BaseClass.__init__(self, config)
+    def __init__(self):
+        BaseClass.__init__(self)
 
     '''
     Event Types Methods

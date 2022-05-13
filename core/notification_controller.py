@@ -6,8 +6,8 @@ import requests
 
 class DBNotificationController(BaseClass):
 
-    def __init__(self, config):
-        BaseClass.__init__(self, config)
+    def __init__(self):
+        BaseClass.__init__(self)
 
     host = 'https://n8n.pshktrck.ru/webhook/36e771a5-162c-4f96-8d23-bee10432dfb9'
     payload_new = {

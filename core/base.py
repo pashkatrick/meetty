@@ -5,7 +5,7 @@ from models.models import *
 
 class BaseClass(object):
 
-    def __init__(self, config):
+    def __init__(self):
         self.db = orm.Database()
         # self.db.bind(provider='postgres', user=config('PSQL_ROOT_USER'),
         #              password=config('PSQL_ROOT_PASS'),

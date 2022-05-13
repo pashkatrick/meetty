@@ -6,8 +6,8 @@ from models.models import *
 
 class DBMeetingController(BaseClass):
 
-    def __init__(self, config):
-        BaseClass.__init__(self, config)
+    def __init__(self):
+        BaseClass.__init__(self)
 
     '''
     Meeting Methods
