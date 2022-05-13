@@ -5,8 +5,8 @@ from models.models import *
 
 class DBUserController(BaseClass):
 
-    def __init__(self, config):
-        BaseClass.__init__(self, config)
+    def __init__(self):
+        BaseClass.__init__(self)
 
     '''
     User Methods
@@ -64,3 +64,14 @@ class DBUserController(BaseClass):
     @exc_handler
     def is_user_exist(self, _login: str):
         return self._user.select(lambda u: u.username == _login).first()
+
+    @db_session
+    @exc_handler
+    def upload_avatar(self, _id, file_path):
+        self._user[_id].avatar = file_path
+        return self._user[_id]
+
+    @db_session
+    @exc_handler
+    def get_avatar(self, _id):
+        return self._user[_id].avatar

@@ -5,8 +5,8 @@ from models.models import *
 
 class DBController(BaseClass):
 
-    def __init__(self, config):
-        BaseClass.__init__(self, config)
+    def __init__(self):
+        BaseClass.__init__(self)
 
     '''
     Event Types Methods
@@ -17,8 +17,7 @@ class DBController(BaseClass):
         event_types = self._event_type.select(
             lambda e: self._user[_id] in e.users
         )
-        if event_types:
-            response = [item.to_dict() for item in event_types]
+        response = [item.to_dict() for item in event_types]
         return dict(event_types=response)
 
     @db_session

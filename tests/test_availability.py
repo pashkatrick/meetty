@@ -32,7 +32,7 @@ class TestAvailablity:
     def test_add_free_time_frames(self):
         response = requests.post(f'{host}/user/6/free/add', json=self.payload)
         assert response.status_code == 200
-        assert response.json()['status'] == 'data was added'
+        assert response.json()['status'] == 'successful request'
 
     def test_add_free_time_duplicates(self):
         response = requests.post(f'{host}/user/8/free/add', json=self.payload)
