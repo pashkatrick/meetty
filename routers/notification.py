@@ -1,15 +1,10 @@
 from fastapi import APIRouter
 from core import notification_controller
-from decouple import Config, RepositoryEnv
 from models.schemes import Notification
 from core.base import mssg_response
 
-# TODO: fix that 'config'
-env = 'development'
-dbg = 'true'
-# print(f'env: {env}, debug: {dbg}')
-env_config = Config(RepositoryEnv(f'./config/{env}.env'))
-dbn = notification_controller.DBNotificationController(config=env_config)
+
+dbn = notification_controller.DBNotificationController()
 router = APIRouter()
 
 

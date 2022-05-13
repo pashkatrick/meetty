@@ -3,7 +3,6 @@ from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi import FastAPI, Depends
 from fastapi.security import HTTPBearer
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 import uvicorn
 from models.schemes import *
 from routers import users, schedules, slots, meetings, types, notification
@@ -11,7 +10,6 @@ from routers import users, schedules, slots, meetings, types, notification
 app = FastAPI()
 
 # TODO: config
-
 origins = [
     'http://109.107.176.29',
     'http://109.107.176.29:5000',

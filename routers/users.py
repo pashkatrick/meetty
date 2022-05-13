@@ -1,18 +1,12 @@
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
-from fastapi import APIRouter, Depends, File, UploadFile, Request
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Depends, File, UploadFile
 from core import user_controller
-from decouple import Config, RepositoryEnv
 from models.schemes import User, Auth
 from core.base import condition_response
 
-# TODO: fix that 'config'
-env = 'development'
-dbg = 'true'
-# print(f'env: {env}, debug: {dbg}')
-env_config = Config(RepositoryEnv(f'./config/{env}.env'))
-dbu = user_controller.DBUserController(config=env_config)
+
+dbu = user_controller.DBUserController()
 router = APIRouter()
 
 

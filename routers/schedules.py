@@ -1,15 +1,9 @@
 from fastapi import APIRouter
 from core import schedule_controller
-from decouple import Config, RepositoryEnv
 from models.schemes import Schedule
 from core.base import condition_response
 
-# TODO: fix that 'config'
-env = 'development'
-dbg = 'true'
-# print(f'env: {env}, debug: {dbg}')
-env_config = Config(RepositoryEnv(f'./config/{env}.env'))
-dbs = schedule_controller.DBScheduleController(config=env_config)
+dbs = schedule_controller.DBScheduleController()
 router = APIRouter()
 
 

@@ -1,15 +1,9 @@
 from fastapi import APIRouter
 from core import meeting_controller
-from decouple import Config, RepositoryEnv
 from models.schemes import Meeting
 from core.base import condition_response
 
-# TODO: fix that 'config'
-env = 'development'
-dbg = 'true'
-# print(f'env: {env}, debug: {dbg}')
-env_config = Config(RepositoryEnv(f'./config/{env}.env'))
-dbm = meeting_controller.DBMeetingController(config=env_config)
+dbm = meeting_controller.DBMeetingController()
 router = APIRouter()
 
 

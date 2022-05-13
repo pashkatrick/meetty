@@ -1,15 +1,10 @@
 from fastapi import APIRouter
 from core import availability_controller
-from decouple import Config, RepositoryEnv
 from models.schemes import Slots, SlotsList
 from core.base import condition_response
 
-# TODO: fix that 'config'
-env = 'development'
-dbg = 'true'
-# print(f'env: {env}, debug: {dbg}')
-env_config = Config(RepositoryEnv(f'./config/{env}.env'))
-dba = availability_controller.DBTimeController(config=env_config)
+
+dba = availability_controller.DBTimeController()
 router = APIRouter()
 
 

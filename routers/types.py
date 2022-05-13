@@ -1,18 +1,11 @@
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi import APIRouter, Depends
-from fastapi.responses import JSONResponse
 from core import event_controller
-from decouple import Config, RepositoryEnv
 from models.schemes import Type, Settings
 from core.base import condition_response
 
-# TODO: fix that 'config'
-env = 'development'
-dbg = 'true'
-# print(f'env: {env}, debug: {dbg}')
-env_config = Config(RepositoryEnv(f'./config/{env}.env'))
-dbe = event_controller.DBController(config=env_config)
+dbe = event_controller.DBController()
 router = APIRouter()
 
 
