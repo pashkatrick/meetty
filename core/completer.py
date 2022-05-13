@@ -10,8 +10,8 @@ import uuid
 
 class DBCompleter(BaseClass):
 
-    def __init__(self, config):
-        BaseClass.__init__(self, config)
+    def __init__(self):
+        BaseClass.__init__(self)
         self.fake = Faker()
 
     @db_session
