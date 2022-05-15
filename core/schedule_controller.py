@@ -47,5 +47,5 @@ class DBScheduleController(BaseClass):
         if 'default' in update_data and update_data['default'] == True:
             for schedule in self._schedule.select(lambda r: self._user[user_id] in r.users):
                 schedule.set(default=False)
-        a = update_handler(update_data)
-        return self._schedule[_id].set(**a)
+        self._schedule[_id].set(**update_handler(update_data))
+        return self._schedule[_id]

@@ -46,4 +46,5 @@ class DBMeetingController(BaseClass):
     @db_session
     @exc_handler
     def update_meeting(self, _id, update_data):
-        return self._meeting[_id].set(**update_handler(update_data))
+        self._meeting[_id].set(**update_handler(update_data))
+        return self._meeting[_id]

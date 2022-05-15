@@ -36,7 +36,8 @@ class DBTimeController(BaseClass):
     @db_session
     @exc_handler
     def update_free_slot(self, _id, update_data):
-        return self._free_at[_id].set(**update_handler(update_data))
+        self._free_at[_id].set(**update_handler(update_data))
+        return self._free_at[_id]
 
     @db_session
     @exc_handler

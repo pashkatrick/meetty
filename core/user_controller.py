@@ -42,7 +42,8 @@ class DBUserController(BaseClass):
     @db_session
     @exc_handler
     def update_user(self, _id, update_data):
-        return self._user[_id].set(**update_handler(update_data))
+        self._user[_id].set(**update_handler(update_data))
+        return self._user[_id]
 
     @db_session
     @exc_handler

@@ -30,4 +30,5 @@ class DBController(BaseClass):
     @db_session
     @exc_handler
     def update_type(self, _id, update_data):
-        return self._event_type[_id].set(**update_handler(update_data))
+        self._event_type[_id].set(**update_handler(update_data))
+        return self._event_type[_id]
