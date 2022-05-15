@@ -35,8 +35,12 @@ def exc_handler(func):
     return wrapper
 
 
+def update_handler(upd_data):
+    return {k: v for k, v in upd_data.items() if v is not None}
+
+
 def condition_response(func):
-    if func:
+    if func: 
         return dict(status=f'successful request')
     else:
         return dict(status=f'internal error')

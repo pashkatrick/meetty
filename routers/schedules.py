@@ -22,6 +22,6 @@ def delete_schedule(schedule_id: int):
     return condition_response(dbs.delete_schedule(_id=schedule_id))
 
 
-@router.put('/schedule/{schedule_id}/update', tags=['schedule'])
-def update_schedule(schedule_id: int, req: Schedule):
-    return condition_response(dbs.update_schedule(schedule_id, req.dict()))
+@router.put('/user/{user_id}/schedule/{schedule_id}/update', tags=['schedule'])
+def update_schedule(schedule_id: int, user_id: int, req: Schedule):
+    return condition_response(dbs.update_schedule(schedule_id, user_id, req.dict()))

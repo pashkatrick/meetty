@@ -30,3 +30,9 @@ def get_event_types_by_user_id(user_id: int):
 def add_user_event_types(user_id: int, req: Type):
     # Authorize.jwt_required()
     return condition_response(dbe.add_types(_id=user_id, type_object=req.dict()))
+
+
+@router.put('/type/{type_id}/update', tags=['event types'])
+def add_user_event_types(type_id: int, req: Type):
+    # Authorize.jwt_required()
+    return condition_response(dbe.aupdate_type(type_id, type_object=req.dict()))

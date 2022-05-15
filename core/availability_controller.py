@@ -1,5 +1,5 @@
 from pony.orm import db_session
-from core.base import BaseClass, exc_handler
+from core.base import BaseClass, exc_handler, update_handler
 from models.models import *
 
 
@@ -36,8 +36,7 @@ class DBTimeController(BaseClass):
     @db_session
     @exc_handler
     def update_free_slot(self, _id, update_data):
-        filtered_data = {k: v for k, v in update_data.items() if v is not None}
-        self._free_at[_id].set(**filtered_data)
+        self._free_at[_id].set(**update_handler(update_data))
         return self._free_at[_id]
 
     @db_session

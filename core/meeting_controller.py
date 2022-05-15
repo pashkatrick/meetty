@@ -1,7 +1,7 @@
-from os import stat, stat_result
 from pony.orm import db_session
-from core.base import BaseClass, exc_handler
+from core.base import BaseClass, exc_handler, update_handler
 from models.models import *
+import uuid
 
 
 class DBMeetingController(BaseClass):
@@ -40,10 +40,11 @@ class DBMeetingController(BaseClass):
     @db_session
     @exc_handler
     def add_meeting(self, _id: int, meeting_object: dict):
+        meeting_object['uuid'] = str(uuid.uuid4())
         return self._meeting(user_id=self._user[_id]._id, **meeting_object)
 
     @db_session
     @exc_handler
     def update_meeting(self, _id, update_data):
-        filtered_data = {k: v for k, v in update_data.items() if v is not None}
-        self._meeting[_id].set(**filtered_data)
+        self._meeting[_id].set(**update_handler(update_data))
+        return self._meeting[_id]
