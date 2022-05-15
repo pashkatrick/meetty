@@ -16,27 +16,31 @@ class Slots(BaseModel):
     day: int
     time_from: int
     time_to: int
-    schedule_id: Optional[int]
+    schedule_id: int | None
+    year: int | None
+    month: int | None
+    day: int | None
+    weekday: int | None    
 
 
 class User(BaseModel):
-    name: Optional[str]
-    username: Optional[str]
-    avatar: Optional[str]
-    bio: Optional[str]
-    lang: Optional[str]
-    email: Optional[str]
-    created_date: Optional[str]
-    password: Optional[str]
-    time_zone: Optional[str]
-    strat_time: Optional[str]
-    theme: Optional[str]
-    away: Optional[bool]
-    verified: Optional[bool]
-    metadata: Optional[str]
-    hide_branding: Optional[bool]
-    credentials: Optional[str]
-    plan: Optional[str]
+    name: str | None
+    username: str | None
+    avatar: str | None
+    bio: str | None
+    lang: str | None
+    email: str | None
+    created_date: str | None
+    password: str | None
+    time_zone: str | None
+    strat_time: str | None
+    theme: str | None
+    away: bool | None
+    verified: bool | None
+    metadata: str | None
+    hide_branding: bool | None
+    credentials: str | None
+    plan: str | None
 
 
 class SlotsList(BaseModel):
@@ -44,36 +48,37 @@ class SlotsList(BaseModel):
 
 
 class Type(BaseModel):
-    default: bool
-    description: str
-    length: int
-    slug: str
-    title: str
+    default: bool | None
+    description: str | None
+    length: int | None
+    slug: str | None
+    title: str | None
 
 
 class Meeting(BaseModel):
-    title: Optional[str]
-    agenda: Optional[str]
-    description: Optional[str]
-    offline: Optional[bool]
-    type_id: Optional[int]
-    recepient_name: Optional[str]
-    recepient_email: Optional[str]
-    start_time: Optional[int]
-    end_time: Optional[int]
-    year: Optional[int]
-    month: Optional[int]
-    day: Optional[int]
-    weekday: Optional[int]
-    status: Optional[int]
-    confirmed: Optional[bool]
-    rejected: Optional[bool]
-    paid: Optional[bool]
-    provider: Optional[str]
+    title: str | None
+    agenda: str | None
+    description: str | None
+    offline: bool | None
+    type_id: int | None
+    recepient_name: str | None
+    recepient_email: str | None
+    start_time: int | None
+    end_time: int | None
+    year: int | None
+    month: int | None
+    day: int | None
+    weekday: int | None
+    status: int | None
+    confirmed: bool | None
+    rejected: bool | None
+    paid: bool | None
+    provider: str | None
 
 
 class Schedule(BaseModel):
     title: str
+    default: bool = False
 
 
 class Notification(BaseModel):

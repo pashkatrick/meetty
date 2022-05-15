@@ -1,5 +1,5 @@
 from pony.orm import db_session
-from core.base import BaseClass, exc_handler
+from core.base import BaseClass, exc_handler, update_handler
 from models.models import *
 
 
@@ -29,7 +29,5 @@ class DBController(BaseClass):
 
     @db_session
     @exc_handler
-    def update_types(self, update_id, update_data):
-        usr = self._event_type[update_id]
-        usr.set(**update_data)
-        return True
+    def update_type(self, _id, update_data):
+        return self._event_type[_id].set(**update_handler(update_data))

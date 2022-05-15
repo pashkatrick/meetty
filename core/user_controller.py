@@ -1,5 +1,5 @@
 from pony.orm import db_session
-from core.base import BaseClass, exc_handler
+from core.base import BaseClass, exc_handler, update_handler
 from models.models import *
 
 
@@ -42,9 +42,7 @@ class DBUserController(BaseClass):
     @db_session
     @exc_handler
     def update_user(self, _id, update_data):
-        filtered_data = {k: v for k, v in update_data.items() if v is not None}
-        self._user[_id].set(**filtered_data)
-        return self._user[_id]
+        return self._user[_id].set(**update_handler(update_data))
 
     @db_session
     @exc_handler

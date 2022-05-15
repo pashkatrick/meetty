@@ -35,7 +35,7 @@ class DBCompleter(BaseClass):
         for i in range(10):
             fake_data = dict(
                 title=f'{i*3}0 minute meeting',
-                uuid=str(uuid.uuid4()),
+                uuid = str(uuid.uuid4()),
                 agenda=self.fake.paragraph(nb_sentences=1),
                 description=self.fake.paragraph(nb_sentences=1),
                 user_id=i,

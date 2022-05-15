@@ -1,5 +1,7 @@
+from email.policy import default
+from glob import escape
 from pony.orm import db_session
-from core.base import BaseClass, exc_handler
+from core.base import BaseClass, exc_handler, update_handler
 from models.models import *
 
 
@@ -41,7 +43,9 @@ class DBScheduleController(BaseClass):
 
     @db_session
     @exc_handler
-    def update_schedule(self, _id, update_data):
-        filtered_data = {k: v for k, v in update_data.items() if v is not None}
-        self._schedule[_id].set(**filtered_data)
-        return self._schedule[_id]
+    def update_schedule(self, _id, user_id, update_data):
+        if 'default' in update_data and update_data['default'] == True:
+            for schedule in self._schedule.select(lambda r: self._user[user_id] in r.users):
+                schedule.set(default=False)
+        a = update_handler(update_data)
+        return self._schedule[_id].set(**a)
