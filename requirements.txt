@@ -11,6 +11,7 @@ cffi==1.15.0
 charset-normalizer==2.0.10
 cleo==1.0.0a4
 click==8.0.3
+cloudpayments==1.6.3
 crashtest==0.3.1
 Deprecated==1.2.13
 dnspython==2.2.0
@@ -32,7 +33,6 @@ jsonschema==4.4.0
 MarkupSafe==2.0.1
 mistune==2.0.2
 packaging==21.3
-pagan==0.4.3
 Pillow==9.1.0
 pluggy==1.0.0
 pony==0.7.16
