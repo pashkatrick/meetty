@@ -59,7 +59,7 @@ def free_at(db, orm, User):
         day = orm.Optional(int)
         time_from = orm.Optional(int)
         time_to = orm.Optional(int)
-        schedule_id = orm.Optional(int)
+        schedule_id = orm.Optional(int)         
     return Free
 
 

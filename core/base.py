@@ -1,5 +1,4 @@
 from pony import orm
-from functools import wraps
 from models.models import *
 
 
@@ -48,6 +47,6 @@ def condition_response(func):
 
 def mssg_response(func):
     if func:
-        return dict(status=f'message was delivered')
+        return dict(status=f'message was sended')
     else:
-        return dict(status=f'message was not delivered')
+        return dict(status=f'message was not sended')
