@@ -41,8 +41,9 @@ class DBTimeController(BaseClass):
 
     @db_session
     @exc_handler
-    def delete_time_slot(self, _id):
-        return self._free_at[_id].delete()
+    def delete_free_slot(self, _id):
+        self._free_at[_id].delete()
+        return True
 
     '''
     Busy Time Methods
@@ -71,7 +72,12 @@ class DBTimeController(BaseClass):
 
     @db_session
     @exc_handler
-    def update_busy_slots(self, update_id, update_data):
-        usr = self._busy_at[update_id]
-        usr.set(**update_data)
+    def update_busy_slot(self, _id, update_data):
+        self._busy_at[_id].set(**update_handler(update_data))
+        return self._busy_at[_id]
+
+    @db_session
+    @exc_handler
+    def delete_busy_slot(self, _id):
+        self._busy_at[_id].delete()
         return True

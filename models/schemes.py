@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from typing import List
-from typing import Optional
 
 
 class Settings(BaseModel):
@@ -12,15 +11,21 @@ class Auth(BaseModel):
     password: str
 
 
-class Slots(BaseModel):
-    day: int
-    time_from: int
-    time_to: int
+class FreeSlots(BaseModel):
+    day: int | None
+    time_from: int | None
+    time_to: int | None
     schedule_id: int | None
+
+
+class BusySlots(BaseModel):
+    day: int | None
+    time_from: int | None
+    time_to: int | None
     year: int | None
     month: int | None
     day: int | None
-    weekday: int | None    
+    weekday: int | None
 
 
 class User(BaseModel):
@@ -43,8 +48,12 @@ class User(BaseModel):
     plan: str | None
 
 
-class SlotsList(BaseModel):
-    slots: List[Slots]
+class FreeSlotsList(BaseModel):
+    slots: List[FreeSlots]
+
+
+class BusySlotsList(BaseModel):
+    slots: List[BusySlots]
 
 
 class Type(BaseModel):
@@ -82,5 +91,6 @@ class Schedule(BaseModel):
 
 
 class Notification(BaseModel):
-    chat_id: str
+    # chat_id: str
     # message: str
+    reply_to: str
