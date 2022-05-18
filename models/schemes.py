@@ -1,9 +1,10 @@
 from pydantic import BaseModel
 from typing import List
+from secrets import secret_phrase
 
 
 class Settings(BaseModel):
-    authjwt_secret_key: str = 'top-secret'
+    authjwt_secret_key: str = secret_phrase
 
 
 class Auth(BaseModel):

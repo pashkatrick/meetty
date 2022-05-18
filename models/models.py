@@ -1,8 +1,3 @@
-# from calendar import weekday
-# from email.policy import default
-# from typing import Optional
-
-
 def user(db, orm):
     class User(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
@@ -13,7 +8,7 @@ def user(db, orm):
         lang = orm.Optional(str)
         email = orm.Optional(str)
         created_date = orm.Optional(str)
-        password = orm.Optional(str, hidden=True)
+        password = orm.Optional(bytes, hidden=True)
         time_zone = orm.Optional(str)
         strat_time = orm.Optional(str)
         theme = orm.Optional(str)
@@ -59,7 +54,7 @@ def free_at(db, orm, User):
         day = orm.Optional(int)
         time_from = orm.Optional(int)
         time_to = orm.Optional(int)
-        schedule_id = orm.Optional(int)         
+        schedule_id = orm.Optional(int)
     return Free
 
 
@@ -72,8 +67,8 @@ def busy_at(db, orm, User):
         time_to = orm.Optional(int)
         year = orm.Optional(int)
         month = orm.Optional(int)
-        day = orm.Optional(int)    
-        weekday = orm.Optional(int)    
+        day = orm.Optional(int)
+        weekday = orm.Optional(int)
     return Busy
 
 

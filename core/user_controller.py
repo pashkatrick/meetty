@@ -1,12 +1,15 @@
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler, update_handler
 from models.models import *
+from cryptography.fernet import Fernet
+from secrets import fernet_key
 
 
 class DBUserController(BaseClass):
 
     def __init__(self):
         BaseClass.__init__(self)
+        self.fernet = Fernet(fernet_key)
 
     '''
     User Methods
@@ -50,14 +53,19 @@ class DBUserController(BaseClass):
     def sign_up(self, _login: str, _pass: str):
         # is_target_user = self.is_user_exist(_login)
         # if not is_target_user:
-        return self.add_user(dict(username=_login, name=_login, password=_pass))
+        return self.add_user(dict(
+            username=_login,
+            name=_login,
+            password=self.fernet.encrypt(_pass.encode())
+        )
+        )
 
     @db_session
     @exc_handler
     def sign_in(self, _login: str, _pass: str):
         is_target_user = self.is_user_exist(_login)
-        # a = bcrypt.checkpw(_pass.encode('utf-8'), bcrypt.hashpw(target_user.password.encode('utf-8'), b'$2b$12$xdZ1i4SXX6OwCx2WiRJEme'))
-        return is_target_user
+        if self.fernet.decrypt(is_target_user.password).decode() == _pass:
+            return is_target_user
 
     @db_session
     @exc_handler
