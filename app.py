@@ -8,18 +8,11 @@ from core import user_controller
 from fastapi.responses import JSONResponse
 from models.schemes import *
 from routers import users, schedules, slots, meetings, types, notification
+from secrets import origins
 
 app = FastAPI()
 dbu = user_controller.DBUserController()
 
-# TODO: config
-origins = [
-    'http://109.107.176.29',
-    'http://109.107.176.29:5000',
-    'http://localhost',
-    'http://localhost:5000',
-    'http://localhost:3000'
-]
 
 app.add_middleware(
     CORSMiddleware,

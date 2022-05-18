@@ -39,7 +39,7 @@ def update_handler(upd_data):
 
 
 def condition_response(func):
-    if func: 
+    if func:
         return dict(status=f'successful request')
     else:
         return dict(status=f'internal error')
