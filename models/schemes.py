@@ -92,6 +92,7 @@ class Schedule(BaseModel):
 
 
 class Notification(BaseModel):
-    # chat_id: str
-    # message: str
     reply_to: str
+    subject: str
+    message: str
+    attach: str | None

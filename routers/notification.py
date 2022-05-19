@@ -9,5 +9,7 @@ router = APIRouter()
 
 
 @router.post('/notify/email', tags=['notification'])
-def send_email(reply_to: str, message: str = 'Hi. that\'s you email from http'):
-    return mssg_response(dbn.send_email(reply_to, message))
+def send_email(
+        reply_to: str, attach: str | None, subject: str = 'Event between <user> and <user>',
+        message: str = '<user> requested you for meeting, details:'):
+    return mssg_response(dbn.send_email(reply_to, subject, message, attach))
