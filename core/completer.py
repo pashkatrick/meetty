@@ -6,8 +6,6 @@ from models.models import *
 import random
 from random import randint
 import uuid
-from cryptography.fernet import Fernet
-from secrets import fernet_key
 
 
 class DBCompleter(BaseClass):
@@ -15,7 +13,6 @@ class DBCompleter(BaseClass):
     def __init__(self):
         BaseClass.__init__(self)
         self.fake = Faker()
-        self.fernet = Fernet(fernet_key)
 
     @db_session
     def add_users(self):
@@ -26,7 +23,7 @@ class DBCompleter(BaseClass):
                 avatar='file://<path>/',
                 bio=self.fake.paragraph(nb_sentences=1),
                 lang=random.choice(['ru', 'en', 'gb', 'us']),
-                password=self.fernet.encrypt(''.encode())
+                password=b'gAAAAABihpMv-zYVRSjX6hZVkUFaTWWMFu-b31uC_gwXvuWW4dNEr_ByHOkPHFrFXVur006sNxjJOFOwp_qEqh5D34AmOiBU5g=='
             )
             try:
                 self._user(**fake_data)
