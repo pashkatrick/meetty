@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from core import meeting_controller
 from models.schemes import Meeting
 from core.base import condition_response
@@ -6,6 +6,12 @@ from core.base import condition_response
 dbm = meeting_controller.DBMeetingController()
 router = APIRouter()
 
+status_map = {
+    'upcoming': 1,
+    'past': 2,
+    'canceled': 3,
+    'status': 0
+}
 
 @router.post('/meeting/{user_id}/add', tags=['events'])
 def add_meeting(user_id: int, req: Meeting):
@@ -13,8 +19,8 @@ def add_meeting(user_id: int, req: Meeting):
 
 
 @router.get('/meeting/{user_id}/all', tags=['events'])
-def get_meetings(user_id: int, limit: int = 50, offset: int = 0):
-    return dbm.get_meetings(user_id, limit, offset)
+def get_meetings(user_id: int, limit: int = 50, offset: int = 0, status: str = Query('status', enum=['upcoming', 'past', 'canceled'])):
+    return dbm.get_meetings(user_id, limit, offset, status_map[status])
 
 
 @router.get('/meeting/{user_id}/{meeting_id}', tags=['events'])
