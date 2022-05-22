@@ -1,10 +1,8 @@
-<h1 align="center">Calendario</h1>
+<h1 align="center">Meetty</h1>
 <p align="center">
-<img width="217" alt="logo preview" src="https://user-images.githubusercontent.com/8003175/161131281-4583c3da-c817-49d9-ae5c-1968252690c1.png">
+<img width="217" alt="logo preview" src="https://user-images.githubusercontent.com/8003175/169683883-82c3d802-cbce-4465-a91d-a25c223e6996.png">
 </p>
 
-
-## About
 ...
 
 ## Features
