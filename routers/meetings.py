@@ -8,6 +8,12 @@ dbm = meeting_controller.DBMeetingController()
 flow = flow_controller.FlowController()
 router = APIRouter()
 
+status_map = {
+    'upcoming': 1,
+    'past': 2,
+    'canceled': 3,
+    'status': 0
+}
 
 @router.post('/meeting/{user_id}/create', tags=['events'])
 def add_meeting(user_id: int, req: Meeting):

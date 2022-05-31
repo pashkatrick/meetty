@@ -1,3 +1,4 @@
+import stat
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler, update_handler
 import uuid
