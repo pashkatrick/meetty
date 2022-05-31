@@ -1,7 +1,5 @@
-import stat
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler, update_handler
-from models.models import *
 import uuid
 
 
@@ -25,7 +23,7 @@ class DBMeetingController(BaseClass):
 
     @db_session
     @exc_handler
-    def get_meetings(self, _id, limit, offset, status: int):
+    def get_meetings(self, _id: int, limit: int, offset: int, status: int):
         if status:
             meetings = self._meeting.select(
                 lambda m: self._user[_id]._id == m.user_id and m.status == status
@@ -39,12 +37,12 @@ class DBMeetingController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_meeting(self, _id: int, meeting_object: dict):
+    def add_meeting(self, user_id: int, meeting_object: dict):
         meeting_object['uuid'] = str(uuid.uuid4())
-        return self._meeting(user_id=self._user[_id]._id, **meeting_object)
+        return self._meeting(user_id=self._user[user_id]._id, **meeting_object)
 
     @db_session
     @exc_handler
-    def update_meeting(self, _id, update_data):
+    def update_meeting(self, _id: int, update_data: dict):
         self._meeting[_id].set(**update_handler(update_data))
         return self._meeting[_id]

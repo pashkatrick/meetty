@@ -27,6 +27,7 @@ class BusySlots(BaseModel):
     month: int | None
     day: int | None
     weekday: int | None
+    meeting_id: int | None
 
 
 class User(BaseModel):
@@ -95,4 +96,4 @@ class Notification(BaseModel):
     reply_to: str
     subject: str
     message: str
-    attach: str | None
+    # attach: str

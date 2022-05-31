@@ -2,7 +2,6 @@ import email
 from pony.orm import db_session
 from faker import Faker
 from core.base import BaseClass
-from models.models import *
 import random
 from random import randint
 import uuid
@@ -106,18 +105,21 @@ class DBCompleter(BaseClass):
                     day=0,
                     time_from=540,
                     time_to=1020,
+                    meeting_id=i
                 ),
                 self._busy_at(
                     users=self._user[i],
                     day=1,
                     time_from=540,
                     time_to=600,
+                    meeting_id=i
                 ),
                 self._busy_at(
                     users=self._user[i],
                     day=3,
                     time_from=630,
-                    time_to=1020
+                    time_to=1020,
+                    meeting_id=i
                 )
             except Exception as e:
                 return print(f'error: {e}')
