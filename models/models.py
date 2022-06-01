@@ -69,6 +69,7 @@ def busy_at(db, orm, User):
         month = orm.Optional(int)
         day = orm.Optional(int)
         weekday = orm.Optional(int)
+        meeting_id = orm.Optional(int)
     return Busy
 
 

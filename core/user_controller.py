@@ -1,6 +1,5 @@
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler, update_handler
-from models.models import *
 from cryptography.fernet import Fernet
 from secrets import fernet_key
 
@@ -31,7 +30,7 @@ class DBUserController(BaseClass):
 
     @db_session
     @exc_handler
-    def get_users(self, limit, offset):
+    def get_users(self, limit: int, offset: int):
         result = []
         for item in self._user.select()[offset:limit]:
             result.append(item.to_dict())
@@ -39,12 +38,12 @@ class DBUserController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_user(self, user_object):
+    def add_user(self, user_object: dict):
         return self._user(**user_object)
 
     @db_session
     @exc_handler
-    def update_user(self, _id, update_data):
+    def update_user(self, _id: int, update_data: dict):
         self._user[_id].set(**update_handler(update_data))
         return self._user[_id]
 
@@ -74,11 +73,11 @@ class DBUserController(BaseClass):
 
     @db_session
     @exc_handler
-    def upload_avatar(self, _id, file_path):
+    def upload_avatar(self, _id: int, file_path: str):
         self._user[_id].avatar = file_path
         return self._user[_id]
 
     @db_session
     @exc_handler
-    def get_avatar(self, _id):
+    def get_avatar(self, _id: int):
         return self._user[_id].avatar

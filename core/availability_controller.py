@@ -1,6 +1,5 @@
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler, update_handler
-from models.models import *
 
 
 class DBTimeController(BaseClass):
@@ -13,7 +12,7 @@ class DBTimeController(BaseClass):
     '''
     @db_session
     @exc_handler
-    def get_free_slots_by_user_id(self, _id):
+    def get_free_slots_by_user_id(self, _id: int):
         slots = self._free_at.select(
             lambda a: self._user[_id] in a.users
         )
@@ -22,7 +21,7 @@ class DBTimeController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_user_free_slots(self, _id, slots_list: list):
+    def add_user_free_slots(self, _id: int, slots_list: list):
         # exist = []
         # for item in self.get_free_slots_by_user_id(_id)['free_slots']:
         #     del item['_id']
@@ -35,7 +34,7 @@ class DBTimeController(BaseClass):
 
     @db_session
     @exc_handler
-    def update_free_slot(self, _id, update_data):
+    def update_free_slot(self, _id: int, update_data: dict):
         self._free_at[_id].set(**update_handler(update_data))
         return self._free_at[_id]
 
@@ -50,7 +49,7 @@ class DBTimeController(BaseClass):
     '''
     @db_session
     @exc_handler
-    def get_busy_slots_by_user_id(self, _id):
+    def get_busy_slots_by_user_id(self, _id: int):
         slots = self._busy_at.select(
             lambda a: self._user[_id] in a.users
         )
@@ -59,7 +58,7 @@ class DBTimeController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_user_busy_slots(self, _id, slots_list: list):
+    def add_user_busy_slots(self, user_id: int, slots_list: list):
         # exist = []
         # for item in self.get_busy_slots_by_user_id(_id)['busy_slots']:
         #     del item['_id']
@@ -67,12 +66,12 @@ class DBTimeController(BaseClass):
         #     exist.append(item)
         for slot_object in slots_list:
             # if not slot_object in exist:
-            self._busy_at(users=self._user[_id], **slot_object)
+            self._busy_at(users=self._user[user_id], **slot_object)
         return True
 
     @db_session
     @exc_handler
-    def update_busy_slot(self, _id, update_data):
+    def update_busy_slot(self, _id: int, update_data: dict):
         self._busy_at[_id].set(**update_handler(update_data))
         return self._busy_at[_id]
 

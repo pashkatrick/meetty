@@ -1,8 +1,5 @@
-from email.policy import default
-from glob import escape
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler, update_handler
-from models.models import *
 
 
 class DBScheduleController(BaseClass):
@@ -10,7 +7,7 @@ class DBScheduleController(BaseClass):
     def __init__(self):
         BaseClass.__init__(self)
 
-    def _add_free_slots(self, _item):
+    def _add_free_slots(self, _item: dict):
         slots = self._free_at.select(
             lambda a: _item._id == a.schedule_id
         )
@@ -24,7 +21,7 @@ class DBScheduleController(BaseClass):
     '''
     @db_session
     @exc_handler
-    def get_schedules(self, _id):
+    def get_schedules(self, _id: int):
         schedules = self._schedule.select(
             lambda a: self._user[_id] in a.users
         )
@@ -33,7 +30,7 @@ class DBScheduleController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_schedule(self, _id, title):
+    def add_schedule(self, _id: int, title: str):
         return self._schedule(title=title, users=self._user[_id])
 
     @db_session
@@ -43,7 +40,7 @@ class DBScheduleController(BaseClass):
 
     @db_session
     @exc_handler
-    def update_schedule(self, _id, user_id, update_data):
+    def update_schedule(self, _id: int, user_id: int, update_data: dict):
         if 'default' in update_data and update_data['default'] == True:
             for schedule in self._schedule.select(lambda r: self._user[user_id] in r.users):
                 schedule.set(default=False)

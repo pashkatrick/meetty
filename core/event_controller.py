@@ -1,6 +1,5 @@
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler, update_handler
-from models.models import *
 
 
 class DBController(BaseClass):
@@ -13,7 +12,7 @@ class DBController(BaseClass):
     '''
     @db_session
     @exc_handler
-    def get_event_types_by_user_id(self, _id):
+    def get_event_types_by_user_id(self, _id: int):
         event_types = self._event_type.select(
             lambda e: self._user[_id] in e.users
         )
@@ -22,13 +21,13 @@ class DBController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_types(self, _id, type_object: dict):
+    def add_types(self, _id: int, type_object: dict):
         # TODO: add duplicate check
         # exist = self.get_event_types_by_user_id(_id)['data']
         return self._event_type(users=self._user[_id], **type_object)
 
     @db_session
     @exc_handler
-    def update_type(self, _id, update_data):
+    def update_type(self, _id: int, update_data: dict):
         self._event_type[_id].set(**update_handler(update_data))
         return self._event_type[_id]
