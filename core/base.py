@@ -1,15 +1,17 @@
 from pony import orm
 from models.models import *
+from secrets import PSQL_ROOT_USER, PSQL_ROOT_PASS, PSQL_HOST, PSQL_DB
 
 
 class BaseClass(object):
 
     def __init__(self):
         self.db = orm.Database()
-        # self.db.bind(provider='postgres', user=config('PSQL_ROOT_USER'),
-        #              password=config('PSQL_ROOT_PASS'),
-        #              host=config('PSQL_HOST'),
-        #              database=config('PSQL_DB'))
+        # self.db.bind(provider='postgres', user=PSQL_ROOT_USER,
+        #              password=PSQL_ROOT_PASS,
+        #              host=PSQL_HOST,
+        #              database=PSQL_DB)
+
         self.db.bind(provider='sqlite',
                      filename='../database.sqlite', create_db=True)
 

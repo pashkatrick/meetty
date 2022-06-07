@@ -40,10 +40,14 @@ class DBMeetingController(BaseClass):
     @exc_handler
     def add_meeting(self, user_id: int, meeting_object: dict):
         meeting_object['uuid'] = str(uuid.uuid4())
-        return self._meeting(user_id=self._user[user_id]._id, **meeting_object)
+        new_meeting = self._meeting(
+            user_id=self._user[user_id]._id, **meeting_object)
+        self.db.commit()
+        return new_meeting._id
 
     @db_session
     @exc_handler
     def update_meeting(self, _id: int, update_data: dict):
         self._meeting[_id].set(**update_handler(update_data))
+        self.db.commit()
         return self._meeting[_id]

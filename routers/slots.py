@@ -36,8 +36,8 @@ def get_busy_slots_by_user_id(user_id: int):
 
 
 @router.post('/user/{user_id}/busy/add', tags=['time slots'])
-def add_user_busy_slots(user_id: int, req: BusySlotsList):
-    return condition_response(dba.add_user_busy_slots(_id=user_id, slots_list=req.dict()['slots']))
+def add_user_busy_slot(user_id: int, req: BusySlots):
+    return condition_response(dba.add_user_busy_slot(user_id, slot_object=req.dict()))
 
 
 @router.put('/slot/{slot_id}/busy/update', tags=['time slots'])
