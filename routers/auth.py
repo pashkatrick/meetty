@@ -1,8 +1,8 @@
-from fastapi.security import HTTPBearer, HTTPBasic
+from fastapi.security import HTTPBearer
 from fastapi_jwt_auth import AuthJWT
 from fastapi import Depends, APIRouter
 from core import user_controller
-from models.schemes import *
+from models.schemes import Settings, Auth
 
 
 dbu = user_controller.DBUserController()
@@ -10,7 +10,6 @@ router = APIRouter()
 
 # need for docs auth button
 token_auth_scheme = HTTPBearer()
-# basic_auth_scheme = HTTPBasic()
 
 
 @AuthJWT.load_config
@@ -25,16 +24,6 @@ def ready(Authorize: AuthJWT = Depends(), token=Depends(token_auth_scheme)):
     return dict(status=f'ok, {current_user}')
 
 
-@router.post('/auth/signup', tags=['auth'])
-def registration(req: Auth):
-    user_login = req.login
-    user_pass = req.password
-    if dbu.sign_up(user_login, user_pass):
-        return dict(status=f'user {user_login} was registered')
-    else:
-        return dict(data=f'user {user_login} already exist')
-
-
 @router.post('/auth/signin', tags=['auth'])
 def login(req: Auth, Authorize: AuthJWT = Depends()):
     user_login = req.login
@@ -44,3 +33,13 @@ def login(req: Auth, Authorize: AuthJWT = Depends()):
         return dict(token=access_token)
     else:
         return dict(data='user doesn\'t exist')
+
+
+@router.post('/auth/signup', tags=['auth'])
+def registration(req: Auth):
+    user_login = req.login
+    user_pass = req.password
+    if dbu.sign_up(user_login, user_pass):
+        return dict(status=f'user {user_login} was registered')
+    else:
+        return dict(data=f'user {user_login} already exist')

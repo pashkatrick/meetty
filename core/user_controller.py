@@ -56,8 +56,7 @@ class DBUserController(BaseClass):
             username=_login,
             name=_login,
             password=self.fernet.encrypt(_pass.encode())
-        )
-        )
+        ))
 
     @db_session
     @exc_handler
