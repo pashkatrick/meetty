@@ -54,7 +54,6 @@ class DBUserController(BaseClass):
         # if not is_target_user:
         return self.add_user(dict(
             username=_login,
-            name=_login,
             password=self.fernet.encrypt(_pass.encode())
         ))
 

@@ -1,22 +1,21 @@
 from pony import orm
 from models.models import *
-from secrets import PSQL_ROOT_USER, PSQL_ROOT_PASS, PSQL_HOST, PSQL_DB
+from secrets import USER, PASS, HOST, DB
 
 
 class BaseClass(object):
 
     def __init__(self):
         self.db = orm.Database()
-        # self.db.bind(provider='postgres', user=PSQL_ROOT_USER,
-        #              password=PSQL_ROOT_PASS,
-        #              host=PSQL_HOST,
-        #              database=PSQL_DB)
-
-        self.db.bind(provider='sqlite',
-                     filename='../database.sqlite', create_db=True)
+        self.db.bind(provider='mysql',
+                        host=HOST,
+                        user=USER,
+                        passwd=PASS,
+                        db=DB)
+        # self.db.bind(provider='sqlite',
+        #                 filename='../database.sqlite', create_db=True)
 
         _conf = (self.db, orm)
-
         self._user = user(*_conf)
         self._event_type = event_type(*_conf, self._user)
         self._schedule = schedule(*_conf, self._user)
