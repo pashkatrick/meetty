@@ -19,6 +19,6 @@ def send_email(
         subject: str = 'Event between <user> and <user>',
         message: str = '<user> requested you for meeting, details:',
         Authorize: AuthJWT = Depends(), token=Depends(token_auth_scheme)
-):
+    ):
     Authorize.jwt_required()
     return mssg_response(dbn.send_email(reply_to, subject, message, attach))

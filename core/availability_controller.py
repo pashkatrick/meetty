@@ -14,7 +14,7 @@ class DBTimeController(BaseClass):
     @exc_handler
     def get_free_slots_by_user_id(self, _id: int):
         slots = self._free_at.select(
-            lambda a: self._user[_id] in a.users
+            lambda f: self._user[_id] in f.users
         )
         response = [item.to_dict() for item in slots]
         return dict(free_slots=response)
@@ -71,6 +71,12 @@ class DBTimeController(BaseClass):
 
     @db_session
     @exc_handler
+    def add_user_busy_slot(self, user_id: int, slot_object: dict):
+        self._busy_at(users=self._user[user_id], **slot_object)
+        return True
+
+    @db_session
+    @exc_handler
     def update_busy_slot(self, _id: int, update_data: dict):
         self._busy_at[_id].set(**update_handler(update_data))
         return self._busy_at[_id]
@@ -79,4 +85,10 @@ class DBTimeController(BaseClass):
     @exc_handler
     def delete_busy_slot(self, _id):
         self._busy_at[_id].delete()
+        return True
+
+    @db_session
+    @exc_handler
+    def delete_busy_slot_by_meeting_id(self, meeting_id):
+        self._busy_at.select(lambda b: b.meeting_id == meeting_id).delete()
         return True

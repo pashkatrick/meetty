@@ -1,4 +1,3 @@
-import email
 from pony.orm import db_session
 from faker import Faker
 from core.base import BaseClass
@@ -35,18 +34,17 @@ class DBCompleter(BaseClass):
         for i in range(10):
             fake_data = dict(
                 title=f'{i*3}0 minute meeting',
-                uuid = str(uuid.uuid4()),
+                uuid=str(uuid.uuid4()),
                 agenda=self.fake.paragraph(nb_sentences=1),
                 description=self.fake.paragraph(nb_sentences=1),
                 user_id=i,
                 type_id=i,
                 recepient_name=self.fake.name(),
-                recepient_email=self.fake.email(),
+                recepient_email='coolbatmanarrow@gmail.com',
                 year=2022,
                 month=i+2,
                 day=i+10,
-                weekday=randint(0, 7),
-                status=randint(1, 3)
+                weekday=randint(0, 7)
             )
             try:
                 self._meeting(**fake_data)

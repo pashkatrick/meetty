@@ -1,4 +1,4 @@
-# Calendario
+# Meetty
 
 ## Get Started 🚀
 

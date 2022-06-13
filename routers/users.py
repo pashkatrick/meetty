@@ -20,7 +20,7 @@ def get_user_by_name(username: str, full: bool = False):
     return dbu.get_user_by_name(_username=username, full=full)
 
 
-@router.get('/user/{username}')
+@router.get('/user/{username}', tags=['users'])
 def get_user_by_name(username: str, full: bool = False):
     return dbu.get_user_by_name(_username=username, full=full)
 

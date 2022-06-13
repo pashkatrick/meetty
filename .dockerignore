@@ -13,4 +13,5 @@ _*
 .DS_Store
 *.sqlite
 *test*
+meetty-*
 secret*

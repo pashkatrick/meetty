@@ -15,9 +15,10 @@ status_map = {
     'status': 0
 }
 
+
 @router.post('/meeting/{user_id}/create', tags=['events'])
-def add_meeting(user_id: int, req: Meeting):
-    return flow.create_meeting(user_id, meeting_object=req.dict())
+def add_meeting(user_id: int, req: Meeting, notify: bool = False):
+    return condition_response(flow.create_meeting(user_id, notify, req))
 
 
 @router.get('/meeting/{user_id}/all', tags=['events'])
@@ -35,11 +36,6 @@ def update_meeting(meeting_id: int, req: Meeting):
     return condition_response(dbm.update_meeting(meeting_id, req.dict()))
 
 
-# @router.post('/meeting/{user_id}/create', tags=['events'])
-# def create_meeting(user_id: int, req: Meeting):
-#     return flow.create_meeting(user_id, meeting_object=req.dict())
-
-
 @router.post('/meeting/{meeting_id}/cancel', tags=['events'])
-def update_meeting(meeting_id: int):
-    return condition_response(flow.cancel_meeting(meeting_id))
+def update_meeting(meeting_id: int, notify: bool = False):
+    return condition_response(flow.cancel_meeting(meeting_id, notify))

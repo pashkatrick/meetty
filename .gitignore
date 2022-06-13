@@ -139,3 +139,5 @@ tests.sh
 *.ics
 *.sh
 avatars/
+meetty-*
+.dockerignore
