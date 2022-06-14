@@ -1,4 +1,4 @@
-FROM python:3.10.4-buster
+FROM python:3.11.0b1-slim-buster
 WORKDIR /app
 COPY . .
 RUN pip install pip --upgrade
