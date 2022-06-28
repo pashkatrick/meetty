@@ -5,7 +5,7 @@ class TestEvents:
 
     user_id = 8
 
-    meeting_id = 1
+    meeting_id = 9
 
     payload = {
         'title': '135 minute meeting',

@@ -1,14 +1,14 @@
 def user(db, orm):
     class User(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
-        name = orm.Required(str)
+        name = orm.Optional(str)
         username = orm.Required(str)
         avatar = orm.Optional(str)
         bio = orm.Optional(str)
         lang = orm.Optional(str)
         email = orm.Optional(str)
         created_date = orm.Optional(str)
-        password = orm.Optional(bytes, hidden=True)
+        password = orm.Required(bytes, hidden=True)
         time_zone = orm.Optional(str)
         strat_time = orm.Optional(str)
         theme = orm.Optional(str)

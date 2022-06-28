@@ -42,4 +42,4 @@ def registration(req: Auth):
     if dbu.sign_up(user_login, user_pass):
         return dict(status=f'user {user_login} was registered')
     else:
-        return dict(data=f'user {user_login} already exist')
+        return dict(data='Something wrong or user already exist')
