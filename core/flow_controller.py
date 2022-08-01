@@ -38,7 +38,7 @@ class FlowController(BaseClass):
             'time_from': meeting_object.start_time,
             'time_to': meeting_object.end_time,
             'year': meeting_object.year,
-            'month': meeting_object.year,
+            'month': meeting_object.month,
             'day': meeting_object.day,
             'weekday': meeting_object.weekday,
             'meeting_id': meeting_id

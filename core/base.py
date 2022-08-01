@@ -7,13 +7,13 @@ class BaseClass(object):
 
     def __init__(self):
         self.db = orm.Database()
-        self.db.bind(provider='mysql',
-                        host=HOST,
-                        user=USER,
-                        passwd=PASS,
-                        db=DB)
-        # self.db.bind(provider='sqlite',
-        #                 filename='../database.sqlite', create_db=True)
+        # self.db.bind(provider='mysql',
+        #                 host=HOST,
+        #                 user=USER,
+        #                 passwd=PASS,
+        #                 db=DB)
+        self.db.bind(provider='sqlite',
+                        filename='../database.sqlite', create_db=True)
 
         _conf = (self.db, orm)
         self._user = user(*_conf)

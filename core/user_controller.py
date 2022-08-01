@@ -50,12 +50,12 @@ class DBUserController(BaseClass):
     @db_session
     @exc_handler
     def sign_up(self, _login: str, _pass: str):
-        # is_target_user = self.is_user_exist(_login)
-        # if not is_target_user:
-        return self.add_user(dict(
-            username=_login,
-            password=self.fernet.encrypt(_pass.encode())
-        ))
+        is_target_user = self.is_user_exist(_login)
+        if not is_target_user:
+            return self.add_user(dict(
+                username=_login,
+                password=self.fernet.encrypt(_pass.encode())
+            ))
 
     @db_session
     @exc_handler
