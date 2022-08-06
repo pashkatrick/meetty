@@ -1,3 +1,4 @@
+from email.policy import default
 from pony.orm import db_session
 from core.base import BaseClass, exc_handler, update_handler
 
@@ -30,8 +31,8 @@ class DBScheduleController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_schedule(self, _id: int, title: str):
-        return self._schedule(title=title, users=self._user[_id])
+    def add_schedule(self, _id: int, title: str, default: bool):
+        return self._schedule(title=title, users=self._user[_id], default=default)
 
     @db_session
     @exc_handler

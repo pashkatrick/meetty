@@ -7,16 +7,22 @@ class TestSchedules:
 
     user_id = 2
     payload = {
-        'title': 'that\'s a test',
+        'title': 'that\'s a test'
     }
 
     payload_update = {
-        'title': 'that\s was a test',
+        'title': 'that\s was a test'
     }
 
-    def test_add_schedules(self, url):
+    def test_add_non_default_schedule(self, url):
         response = requests.post(
-            f'{url}/user/{self.user_id}/schedules', json=self.payload)
+            f'{url}/user/{self.user_id}/schedules?default=false', json=self.payload)
+        assert response.status_code == 200
+        assert response.json()['status'] == 'successful request'
+
+    def test_add_default_schedule(self, url):
+        response = requests.post(
+            f'{url}/user/{self.user_id}/schedules?default=true', json=self.payload)
         assert response.status_code == 200
         assert response.json()['status'] == 'successful request'
 
