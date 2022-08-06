@@ -89,7 +89,6 @@ class Meeting(BaseModel):
 
 class Schedule(BaseModel):
     title: str
-    default: bool = False
 
 
 class Notification(BaseModel):

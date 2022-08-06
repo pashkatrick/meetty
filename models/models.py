@@ -2,7 +2,7 @@ def user(db, orm):
     class User(db.Entity):
         _id = orm.PrimaryKey(int, auto=True)
         name = orm.Optional(str)
-        username = orm.Required(str)
+        username = orm.Optional(str)
         avatar = orm.Optional(str)
         bio = orm.Optional(str)
         lang = orm.Optional(str)

@@ -53,7 +53,7 @@ class DBUserController(BaseClass):
         is_target_user = self.is_user_exist(_login)
         if not is_target_user:
             return self.add_user(dict(
-                username=_login,
+                email=_login,
                 password=self.fernet.encrypt(_pass.encode())
             ))
 
@@ -67,7 +67,7 @@ class DBUserController(BaseClass):
     @db_session
     @exc_handler
     def is_user_exist(self, _login: str):
-        return self._user.select(lambda u: u.username == _login).first()
+        return self._user.select(lambda u: u.email == _login).first()
 
     @db_session
     @exc_handler

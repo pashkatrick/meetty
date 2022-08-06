@@ -29,7 +29,7 @@ class TestEvents:
     }
 
     payload_update = {
-        'title': '100500 minutes ago',
+        'title': '100500 minutes ago'
     }
 
     def test_create_meeting(self, url):

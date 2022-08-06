@@ -37,5 +37,5 @@ def update_meeting(meeting_id: int, req: Meeting):
 
 
 @router.post('/meeting/{meeting_id}/cancel', tags=['events'])
-def update_meeting(meeting_id: int, notify: bool = False):
+def cancel_meeting(meeting_id: int, notify: bool = False):
     return condition_response(flow.cancel_meeting(meeting_id, notify))
