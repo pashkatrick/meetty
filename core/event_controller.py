@@ -31,3 +31,9 @@ class DBController(BaseClass):
     def update_type(self, _id: int, update_data: dict):
         self._event_type[_id].set(**update_handler(update_data))
         return self._event_type[_id]
+
+    @db_session
+    @exc_handler
+    def delete_type(self, _id):
+        self._event_type[_id].delete()
+        return True
