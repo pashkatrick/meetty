@@ -37,7 +37,8 @@ class DBScheduleController(BaseClass):
     @db_session
     @exc_handler
     def delete_schedule(self, _id):
-        return self._schedule[_id].delete()
+        self._schedule[_id].delete()
+        return True
 
     @db_session
     @exc_handler
