@@ -28,9 +28,10 @@ def ready(Authorize: AuthJWT = Depends(), token=Depends(token_auth_scheme)):
 def login(req: Auth, Authorize: AuthJWT = Depends()):
     user_login = req.login
     user_pass = req.password
-    if dbu.sign_in(user_login, user_pass):
+    user_id = dbu.sign_in(user_login, user_pass)
+    if user_id:
         access_token = Authorize.create_access_token(subject=user_login)
-        return dict(token=access_token)
+        return dict(user_id=user_id, token=access_token)
     else:
         return dict(data='user doesn\'t exist')
 
@@ -39,7 +40,8 @@ def login(req: Auth, Authorize: AuthJWT = Depends()):
 def registration(req: Auth):
     user_login = req.login
     user_pass = req.password
-    if dbu.sign_up(user_login, user_pass):
-        return dict(status=f'user {user_login} was registered')
+    user_id = dbu.sign_up(user_login, user_pass)
+    if user_id:
+        return dict(user_id=user_id, status=f'user {user_login} was registered')
     else:
         return dict(data='Something wrong or user already exist')

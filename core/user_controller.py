@@ -52,17 +52,18 @@ class DBUserController(BaseClass):
     def sign_up(self, _login: str, _pass: str):
         is_target_user = self.is_user_exist(_login)
         if not is_target_user:
-            return self.add_user(dict(
+            self.add_user(dict(
                 email=_login,
                 password=self.fernet.encrypt(_pass.encode())
-            ))
+            ))            
+            return self.is_user_exist(_login)._id
 
     @db_session
     @exc_handler
     def sign_in(self, _login: str, _pass: str):
         is_target_user = self.is_user_exist(_login)
         if self.fernet.decrypt(is_target_user.password).decode() == _pass:
-            return is_target_user
+            return is_target_user._id
 
     @db_session
     @exc_handler
