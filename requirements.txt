@@ -9,6 +9,7 @@ autopep8==1.6.0
 bcrypt==3.2.0
 blinker==1.4
 certifi==2021.10.8
+cffi==1.15.1
 charset-normalizer==2.0.10
 cleo==1.0.0a4
 click==8.0.3
@@ -63,4 +64,5 @@ typing_extensions==4.0.1
 urllib3==1.26.8
 uvicorn==0.17.6
 Werkzeug==2.0.2
+wrapt==1.14.1
 zipp==3.7.0
