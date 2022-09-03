@@ -31,11 +31,11 @@ class DBScheduleController(BaseClass):
 
     @db_session
     @exc_handler
-    def add_schedule(self, _id: int, title: str, default: bool):
+    def add_schedule(self, _id: int, sched: dict):
         if default == True:
             for schedule in self._schedule.select(lambda r: self._user[_id] in r.users):
                 schedule.set(default=False)
-        return self._schedule(title=title, users=self._user[_id], default=default)
+        return self._schedule(title=sched['title'], users=self._user[_id], default=sched['default'])
 
     @db_session
     @exc_handler

@@ -23,6 +23,7 @@ def user(db, orm):
         event_types = orm.Set('EventType')
         credentials = orm.Optional(str)
         plan = orm.Optional(str)
+        wizarded = orm.Optional(bool, default=False)
     return User
 
 

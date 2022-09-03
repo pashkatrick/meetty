@@ -14,8 +14,8 @@ def get_schedules(user_id: int):
 
 
 @router.post('/user/{user_id}/schedules', tags=['schedule'])
-def add_schedule(user_id: int, req: Schedule, default: bool):
-    return condition_response(dbs.add_schedule(_id=user_id, title=req.dict()['title'], default=default))
+def add_schedule(user_id: int, req: Schedule):
+    return condition_response(dbs.add_schedule(_id=user_id, sched=req.dict()))
 
 
 @router.delete('/schedule/{schedule_id}/delete', tags=['schedule'])

@@ -1,3 +1,4 @@
+from email.policy import default
 from pydantic import BaseModel
 from typing import List
 from secrets import secret_phrase
@@ -48,6 +49,7 @@ class User(BaseModel):
     hide_branding: bool | None
     credentials: str | None
     plan: str | None
+    wizarded: bool | None
 
 
 class FreeSlotsList(BaseModel):
@@ -89,6 +91,7 @@ class Meeting(BaseModel):
 
 class Schedule(BaseModel):
     title: str
+    default: bool
 
 
 class Notification(BaseModel):
