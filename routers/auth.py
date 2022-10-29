@@ -1,10 +1,8 @@
-from genericpath import exists
 from fastapi.security import HTTPBearer
 from fastapi_jwt_auth import AuthJWT
 from fastapi import Depends, APIRouter
 from core import user_controller
-from models.models import user
-from models.schemes import Check, Settings, Auth
+from models.schemes import Settings, Auth
 
 
 dbu = user_controller.DBUserController()
