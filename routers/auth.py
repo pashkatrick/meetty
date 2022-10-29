@@ -49,8 +49,8 @@ def registration(req: Auth):
         return dict(data='Something wrong or user already exist')
 
 
-@router.post('/auth/check', tags=['auth'])
-def check_user(email: Check):
+@router.get('/auth/check', tags=['auth'])
+def check_user(email: str):
     check = dbu.is_user_exist(email)
     if check:
         return dict(user=email, exist=True)

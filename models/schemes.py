@@ -13,10 +13,6 @@ class Auth(BaseModel):
     password: str
 
 
-class Check(BaseModel):
-    email: str   
-
-
 class FreeSlots(BaseModel):
     day: int | None
     time_from: int | None
