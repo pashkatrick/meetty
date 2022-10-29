@@ -67,8 +67,8 @@ class DBUserController(BaseClass):
 
     @db_session
     @exc_handler
-    def is_user_exist(self, _login: str):
-        return self._user.select(lambda u: u.email == _login).first()
+    def is_user_exist(self, _email: str):
+        return self._user.select(lambda u: u.email == _email).first()
 
     @db_session
     @exc_handler

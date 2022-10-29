@@ -1,8 +1,10 @@
+from genericpath import exists
 from fastapi.security import HTTPBearer
 from fastapi_jwt_auth import AuthJWT
 from fastapi import Depends, APIRouter
 from core import user_controller
-from models.schemes import Settings, Auth
+from models.models import user
+from models.schemes import Check, Settings, Auth
 
 
 dbu = user_controller.DBUserController()
@@ -45,3 +47,12 @@ def registration(req: Auth):
         return dict(user_id=user_id, status=f'user {user_login} was registered')
     else:
         return dict(data='Something wrong or user already exist')
+
+
+@router.post('/auth/check', tags=['auth'])
+def check_user(email: Check):
+    check = dbu.is_user_exist(email)
+    if check:
+        return dict(user=email, exist=True)
+    else:
+        return dict(user=email, exist=False)
