@@ -1,3 +1,4 @@
+from pprint import pprint
 from fastapi.security import HTTPBearer
 from fastapi_jwt_auth import AuthJWT
 from fastapi import Depends, APIRouter
@@ -50,7 +51,8 @@ def registration(req: Auth):
 @router.get('/auth/check', tags=['auth'])
 def check_user(email: str):
     check = dbu.is_user_exist(email)
+    pprint(check)
     if check:
-        return dict(user=email, exist=True)
+        return dict(user_id=check._id, email=email, exist=True)
     else:
         return dict(user=email, exist=False)
